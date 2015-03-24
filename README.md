@@ -1,1 +1,1 @@
-# git remote add origin https://github.com/aniruddhabarapatre/learn-rails.git
+# git remote add origin https://github.com/jinsukimwebdeveloper/jira.git
