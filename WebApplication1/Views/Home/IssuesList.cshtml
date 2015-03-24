@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "운영이슈";
+}
+<h2>@ViewBag.Title.</h2>
+<hr />
+<div id="IssueTable">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>이슈</th>
+                <th>상태값</th>
+                <th>중요도</th>
+                <th>담당자</th>
+                <th>예상소요기간</th>
+                <th>완료날짜</th>
+                <th>작성자</th>
+                <th>등록날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>#TS-0001</td>
+                <td>아이디 dhammi 로그인 실패</td>
+                <td>완료</td>
+                <td>상</td>
+                <td>김진수</td>
+                <td>1M</td>
+                <td>2015.04.02</td>
+                <td>홍길동</td>
+                <td>2015.04.01</td>
+            </tr>
+            <tr>
+                <td>#TS-0002</td>
+                <td>Performance 이슈</td>
+                <td>진행중</td>
+                <td>상</td>
+                <td>김진수</td>
+                <td>1M</td>
+                <td>2015.04.02</td>
+                <td>홍길동</td>
+                <td>2015.04.01</td>
+            </tr>
+            <tr>
+                <td>#TS-0003</td>
+                <td>DB Backup</td>
+                <td>진행중</td>
+                <td>상</td>
+                <td>김진수</td>
+                <td>1M</td>
+                <td>2015.04.02</td>
+                <td>홍길동</td>
+                <td>2015.04.01</td>
+            </tr>
+        </tbody>
+    </table>
+    <ul class="pagination">
+        <li>
+            <a href="#">&laquo;</a>
+        </li>
+        <li class="active">
+            <a href="#">1</a>
+        </li>
+        <li>
+            <a href="#">2</a>
+        </li>
+        <li>
+            <a href="#">3</a>
+        </li>
+        <li>
+            <a href="#">4</a>
+        </li>
+        <li>
+            <a href="#">5</a>
+        </li>
+        <li>
+            <a href="#">&raquo;</a>
+        </li>
+    </ul>
+</div>
+
