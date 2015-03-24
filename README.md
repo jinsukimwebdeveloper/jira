@@ -1,1 +1,1 @@
-# git remote add origin https://github.com/jinsukimwebdeveloper/jira.git
+# Issue Tracking System
