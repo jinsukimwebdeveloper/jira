@@ -9,6 +9,6 @@ namespace Jira.BL.Interface
 {
     public interface ILoginHandler
     {
-        LoginResult RequestLogin(LoginInput login);
+        LoginResult RequestLogin(LoginModel login);
     }
 }

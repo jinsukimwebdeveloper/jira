@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Jira.Views.Dto.LoginModel
+@{
     Layout = "";
 }
 
@@ -9,14 +10,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>로그인</title>
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
     <style>
         .form-signin {
             max-width: 330px;
@@ -28,44 +26,79 @@
         body {
             background-color: aliceblue;
         }
+
+        input {
+            margin: 0px;
+        }
     </style>
 </head>
 <body>
     <script>
         $(document).ready(function () {
-            $("#btnLogin").click(function () {
-                var params = {
-                    Email: $("#inputEmail").val().trim(),
-                    Password: $("#inputPassword").val().trim()
-                };
+            $("#errorMsgBlock").hide();
 
-                $.ajax({
-                    url: '@Url.Action("RequestLogin")',
-                    type: "POST",
-                    dataType: 'json',
-                    data: JSON.stringify(params),
-                    async: false,
-                    cache: false,
-                    contentType: 'application/json',
-                    success: function (msg) {
-                        alert(JSON.stringify(msg));
-                        return true;
-                    },
-                    error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        alert(errorThrown);
-                        return false;
-                    }
-                });
-            });
+            $("#inputPassword").focus(function () {
+                if ($("#inputPassword").val() == "") {
+                    $("#errorMsgBlock").hide();
+                }
+            })
         });
+
+        function OnSuccess(response) {
+            if (response.Result == -1 || response.Result == -2) {
+                // display error message
+                $("#errorMsgBlock").show();
+                $("#errorMsg").text(response.Description);
+                if (response.Result == -1)
+                    $('#inputEmail').val('');
+                if (response.Result == -2)
+                    $('#inputPassword').val('');
+            } else {
+                // redirect to issue page
+                window.location.href = "@Url.Action("IssuesList", "Home")";
+            }
+        }
+
+        function OnFailure(response) {
+            // display error message
+            $("#errorMsgBlock").show();
+            $("#errorMsg").text("Internal Error!");
+        }
+
     </script>
     <div class="container">
         <br />
-        @using (Ajax.BeginForm("RequestLogin", "Home", new AjaxOptions { UpdateTargetId = "targetId", HttpMethod = "Post" }, new { @class = "form-signin" }))
+        @using (Ajax.BeginForm("RequestLogin", "Home", new AjaxOptions
         {
-            <h2 class="form-signin-heading">로그인 해 주세요.</h2>
-            <input type="email" id="inputEmail" class="form-control" placeholder="이메일" required autofocus>
-            <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" required>
+            OnSuccess = "OnSuccess",
+            OnFailure = "OnFailure"
+        }, new { @class = "form-signin" }))
+        {
+            <h2>로그인 해 주세요.</h2>
+            <div id="errorMsgBlock">
+                <div class="alert alert-danger" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span class="sr-only">Error:</span>
+                    <span id="errorMsg"></span>
+                </div>
+            </div>
+            @Html.TextBoxFor(m => m.Email, new
+       {
+           id = "inputEmail",
+           @class = "form-control",
+           placeholder = "이메일",
+           type = "email",
+           required = "required",
+           autofocus = "autofocus"
+       })
+            @Html.TextBoxFor(m => m.Password, new
+       {
+           id = "inputPassword",
+           @class = "form-control",
+           placeholder = "비밀번호",
+           type = "password",
+           required = "required"
+       })
             <div class="checkbox">
                 <label>
                     <input type="checkbox" value="remember-me"> 로그인 유지

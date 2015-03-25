@@ -15,10 +15,9 @@ namespace Jira.DL
     {
         private const int dbTimeout = 600;
 
-        public LoginResult RequestLogin(LoginInput login)
+        public LoginResult RequestLogin(LoginModel login)
         {
-            DatabaseFactory.SetDatabaseProviderFactory(new DatabaseProviderFactory());
-            Database db = DatabaseFactory.CreateDatabase("JIRA");
+            Database db = new DatabaseProviderFactory().Create("JIRA");
             LoginResult result = new LoginResult();
             using (DbCommand cmd = db.GetStoredProcCommand("[dbo].[RequestLogin]"))
             {

@@ -9,6 +9,6 @@ namespace Jira.DL.Interfaces
 {
     public interface ILoginDataAccess
     {
-        LoginResult RequestLogin(LoginInput login);
+        LoginResult RequestLogin(LoginModel login);
     }
 }

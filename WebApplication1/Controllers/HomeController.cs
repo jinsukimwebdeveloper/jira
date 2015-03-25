@@ -18,7 +18,7 @@ namespace Jira.Controllers
         }
 
         [HttpPost]
-        public ActionResult RequestLogin(LoginInput login)
+        public ActionResult RequestLogin(LoginModel login)
         {
             LoginHandler loginHandler = new LoginHandler(new LoginDataAccess());
             LoginResult result = loginHandler.RequestLogin(login);

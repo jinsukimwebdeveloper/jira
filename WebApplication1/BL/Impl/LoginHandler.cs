@@ -19,7 +19,7 @@ namespace Jira.BL.Impl
             _loginDataAccess = loginDataAccess;
         }
 
-        public LoginResult RequestLogin(LoginInput login)
+        public LoginResult RequestLogin(LoginModel login)
         {
             return _loginDataAccess.RequestLogin(login);
         }
