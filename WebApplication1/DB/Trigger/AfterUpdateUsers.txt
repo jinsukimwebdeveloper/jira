@@ -1,0 +1,11 @@
+CREATE TRIGGER dbo.AfterUpdateUsers ON Jira.dbo.Users
+AFTER INSERT, UPDATE 
+AS
+BEGIN
+  UPDATE dbo.Users
+  SET UpdatedTimeStamp = GETDATE()
+  FROM Inserted i
+  WHERE dbo.Users.UserId = i.UserId AND dbo.Users.UserId = i.UserId
+END
+
+select * from sys.triggers

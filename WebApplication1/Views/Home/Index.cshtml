@@ -9,12 +9,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>로그인</title>
-
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <style>
         .form-signin {
             max-width: 330px;
@@ -29,9 +31,38 @@
     </style>
 </head>
 <body>
+    <script>
+        $(document).ready(function () {
+            $("#btnLogin").click(function () {
+                var params = {
+                    Email: $("#inputEmail").val().trim(),
+                    Password: $("#inputPassword").val().trim()
+                };
+
+                $.ajax({
+                    url: '@Url.Action("RequestLogin")',
+                    type: "POST",
+                    dataType: 'json',
+                    data: JSON.stringify(params),
+                    async: false,
+                    cache: false,
+                    contentType: 'application/json',
+                    success: function (msg) {
+                        alert(JSON.stringify(msg));
+                        return true;
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                        return false;
+                    }
+                });
+            });
+        });
+    </script>
     <div class="container">
         <br />
-        <form class="form-signin">
+        @using (Ajax.BeginForm("RequestLogin", "Home", new AjaxOptions { UpdateTargetId = "targetId", HttpMethod = "Post" }, new { @class = "form-signin" }))
+        {
             <h2 class="form-signin-heading">로그인 해 주세요.</h2>
             <input type="email" id="inputEmail" class="form-control" placeholder="이메일" required autofocus>
             <input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" required>
@@ -40,13 +71,8 @@
                     <input type="checkbox" value="remember-me"> 로그인 유지
                 </label>
             </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
-        </form>
-
+            <button id="btnLogin" class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
+        }
     </div> <!-- /container -->
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,17 @@
+DROP TABLE Users
+CREATE TABLE Users
+(
+UserId int IDENTITY(1,1) PRIMARY KEY,
+Name varchar(255) NOT NULL,
+Password varchar(255) NOT NULL,
+Email varchar(255) NOT NULL,
+Status bit NOT NULL,
+CreatedTimeStamp datetime2 NOT NULL CONSTRAINT DF_Users_CreateDate_GETDATE DEFAULT GETDATE(),
+UpdatedTimeStamp datetime2 
+)
+TRUNCATE TABLE Users
+INSERT INTO Users (Name, Password, Email, Status) VALUES('김진수', '12345', 'dhammi@hanmail.net', 1);
+INSERT INTO Users (Name, Password, Email, Status) VALUES('김진아', '12345', 'jina@hanmail.net', 1);
+INSERT INTO Users (Name, Password, Email, Status) VALUES('이수현', '12345', 'suhyen@hanmail.net', 1);
+INSERT INTO Users (Name, Password, Email, Status) VALUES('명정은', '12345', 'mje@hanmail.net', 1);
+SELECT * FROM Users

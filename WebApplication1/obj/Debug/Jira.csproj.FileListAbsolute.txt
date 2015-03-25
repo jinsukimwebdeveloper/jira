@@ -2,6 +2,8 @@ D:\jira\WebApplication1\WebApplication1\bin\WebApplication1.dll.config
 D:\jira\WebApplication1\WebApplication1\bin\WebApplication1.dll
 D:\jira\WebApplication1\WebApplication1\bin\WebApplication1.pdb
 D:\jira\WebApplication1\WebApplication1\bin\Antlr3.Runtime.dll
+D:\jira\WebApplication1\WebApplication1\bin\Microsoft.Practices.EnterpriseLibrary.Common.dll
+D:\jira\WebApplication1\WebApplication1\bin\Microsoft.Practices.EnterpriseLibrary.Data.dll
 D:\jira\WebApplication1\WebApplication1\bin\Microsoft.Web.Infrastructure.dll
 D:\jira\WebApplication1\WebApplication1\bin\Newtonsoft.Json.dll
 D:\jira\WebApplication1\WebApplication1\bin\System.Web.Helpers.dll
@@ -12,15 +14,15 @@ D:\jira\WebApplication1\WebApplication1\bin\System.Web.WebPages.Deployment.dll
 D:\jira\WebApplication1\WebApplication1\bin\System.Web.WebPages.dll
 D:\jira\WebApplication1\WebApplication1\bin\System.Web.WebPages.Razor.dll
 D:\jira\WebApplication1\WebApplication1\bin\WebGrease.dll
+D:\jira\WebApplication1\WebApplication1\bin\Microsoft.Practices.EnterpriseLibrary.Common.xml
+D:\jira\WebApplication1\WebApplication1\bin\Microsoft.Practices.EnterpriseLibrary.Data.xml
 D:\jira\WebApplication1\WebApplication1\bin\System.Web.Helpers.xml
-D:\jira\WebApplication1\WebApplication1\bin\System.Web.Mvc.xml
-D:\jira\WebApplication1\WebApplication1\bin\System.Web.Optimization.xml
 D:\jira\WebApplication1\WebApplication1\bin\System.Web.Razor.xml
 D:\jira\WebApplication1\WebApplication1\bin\System.Web.WebPages.xml
 D:\jira\WebApplication1\WebApplication1\bin\System.Web.WebPages.Deployment.xml
 D:\jira\WebApplication1\WebApplication1\bin\System.Web.WebPages.Razor.xml
 D:\jira\WebApplication1\WebApplication1\bin\Antlr3.Runtime.pdb
 D:\jira\WebApplication1\WebApplication1\bin\Newtonsoft.Json.xml
-D:\jira\WebApplication1\WebApplication1\obj\Debug\Jira.csprojResolveAssemblyReference.cache
 D:\jira\WebApplication1\WebApplication1\obj\Debug\WebApplication1.dll
 D:\jira\WebApplication1\WebApplication1\obj\Debug\WebApplication1.pdb
+D:\jira\WebApplication1\WebApplication1\obj\Debug\Jira.csprojResolveAssemblyReference.cache
