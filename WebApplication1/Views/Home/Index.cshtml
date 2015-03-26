@@ -26,10 +26,6 @@
         body {
             background-color: aliceblue;
         }
-
-        input {
-            margin: 0px;
-        }
     </style>
 </head>
 <body>
@@ -68,43 +64,42 @@
     </script>
     <div class="container">
         <br />
-        @using (Ajax.BeginForm("RequestLogin", "Home", new AjaxOptions
+        @using (Ajax.BeginForm("RequestLogin", "Home", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
         {
-            OnSuccess = "OnSuccess",
-            OnFailure = "OnFailure"
-        }, new { @class = "form-signin" }))
-        {
-            <h2>로그인 해 주세요.</h2>
-            <div id="errorMsgBlock">
-                <div class="alert alert-danger" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span>
-                    <span id="errorMsg"></span>
+            <div class="form-signin">
+                <h2>로그인 해 주세요.</h2>
+                <div id="errorMsgBlock">
+                    <div class="alert alert-danger" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        <span id="errorMsg"></span>
+                    </div>
                 </div>
+
+                @Html.TextBoxFor(m => m.Email, new
+            {
+                id = "inputEmail",
+                @class = "form-control input-lg",
+                placeholder = "이메일",
+                type = "email",
+                required = "required",
+                autofocus = "autofocus"
+            })
+                @Html.TextBoxFor(m => m.Password, new
+            {
+                id = "inputPassword",
+                @class = "form-control input-lg",
+                placeholder = "비밀번호",
+                type = "password",
+                required = "required"
+            })
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" value="remember-me"> 로그인 유지
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">로그인</button>
             </div>
-            @Html.TextBoxFor(m => m.Email, new
-       {
-           id = "inputEmail",
-           @class = "form-control",
-           placeholder = "이메일",
-           type = "email",
-           required = "required",
-           autofocus = "autofocus"
-       })
-            @Html.TextBoxFor(m => m.Password, new
-       {
-           id = "inputPassword",
-           @class = "form-control",
-           placeholder = "비밀번호",
-           type = "password",
-           required = "required"
-       })
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox" value="remember-me"> 로그인 유지
-                </label>
-            </div>
-            <button id="btnLogin" class="btn btn-lg btn-primary btn-block" type="submit">로그인</button>
         }
     </div> <!-- /container -->
 </body>

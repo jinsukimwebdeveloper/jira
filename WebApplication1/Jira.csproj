@@ -132,14 +132,16 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DB\SP\GetIssueList.txt" />
     <Content Include="DB\SP\RequestLogin.txt" />
+    <Content Include="DB\Table\Constant.txt" />
+    <Content Include="DB\Table\Issues.txt" />
     <Content Include="DB\Table\LoginHistory.txt" />
     <Content Include="DB\Table\Users.txt" />
-    <Content Include="DB\Trigger\AfterUpdateUsers.txt" />
+    <Content Include="DB\Trigger\AfterUpdateTime.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

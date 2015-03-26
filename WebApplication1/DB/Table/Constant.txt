@@ -1,0 +1,41 @@
+CREATE TABLE Component
+(
+Id int IDENTITY(1,1) PRIMARY KEY,
+Name varchar(255),
+CreatedTimeStamp datetime2 NOT NULL CONSTRAINT DF_Component_CreateDate_GETDATE DEFAULT GETDATE(),
+UpdatedTimeStamp datetime2
+)
+
+INSERT INTO Component(Name) Values('WEB')
+INSERT INTO Component(Name) Values('DB')
+INSERT INTO Component(Name) Values('Requirement')
+SELECT * FROM Component
+
+CREATE TABLE Status
+(
+Id int IDENTITY(1,1) PRIMARY KEY,
+Name varchar(255),
+CreatedTimeStamp datetime2 NOT NULL CONSTRAINT DF_Status_CreateDate_GETDATE DEFAULT GETDATE(),
+UpdatedTimeStamp datetime2
+)
+
+INSERT INTO Status(Name) Values('Open')
+INSERT INTO Status(Name) Values('Resolved')
+INSERT INTO Status(Name) Values('Verified')
+INSERT INTO Status(Name) Values('Closed')
+SELECT * FROM Status
+
+CREATE TABLE Priority
+(
+Id int IDENTITY(1,1) PRIMARY KEY,
+Name varchar(255),
+CreatedTimeStamp datetime2 NOT NULL CONSTRAINT DF_Priority_CreateDate_GETDATE DEFAULT GETDATE(),
+UpdatedTimeStamp datetime2
+)
+INSERT INTO Priority(Name) Values('Major')
+INSERT INTO Priority(Name) Values('Trivial')
+INSERT INTO Priority(Name) Values('Minor')
+SELECT * FROM Priority
+
+
+
