@@ -1,0 +1,28 @@
+﻿CREATE PROCEDURE [dbo].[GetIssueList] 
+(
+	--Input Parameter
+	@StartDate datetime2,
+	@EndDate datetime2,
+)
+AS
+BEGIN
+	SET NOCOUNT ON;  
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;  
+	SET LOCK_TIMEOUT 20000;  
+
+	BEGIN TRY  
+		SELECT I.Id, I.Subject, S.Name, P.Name, U.Name, I.Estimate, 
+		ISNULL(CompletedTimeStamp, '') AS CompletedTimeStamp, U.Name, I.CreatedTimeStamp
+		FROM Issues I 
+		LEFT JOIN Status S 
+		ON I.Status = S.Id
+		LEFT JOIN Users U
+		ON I.Assignee = U.UserId
+		LEFT JOIN Priority P
+		ON I.Priority = P.Id
+		WHERE I.CreatedTimeStamp >= @StarTime AND  I.CreatedTimeStamp <= @EndTime
+	END TRY
+
+	BEGIN CATCH
+	END CATCH
+END
