@@ -2,9 +2,9 @@ DROP TABLE Users
 CREATE TABLE Users
 (
 UserId int IDENTITY(1,1) PRIMARY KEY,
-Name varchar(255) NOT NULL,
-Password varchar(255) NOT NULL,
-Email varchar(255) NOT NULL,
+Name nvarchar(255) NOT NULL,
+Password nvarchar(255) NOT NULL,
+Email nvarchar(255) NOT NULL,
 Status bit NOT NULL,
 CreatedTimeStamp datetime2 NOT NULL CONSTRAINT DF_Users_CreateDate_GETDATE DEFAULT GETDATE(),
 UpdatedTimeStamp datetime2 

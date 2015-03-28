@@ -1,7 +1,7 @@
 CREATE TABLE Component
 (
 Id int IDENTITY(1,1) PRIMARY KEY,
-Name varchar(255),
+Name nvarchar(255),
 CreatedTimeStamp datetime2 NOT NULL CONSTRAINT DF_Component_CreateDate_GETDATE DEFAULT GETDATE(),
 UpdatedTimeStamp datetime2
 )
@@ -14,7 +14,7 @@ SELECT * FROM Component
 CREATE TABLE Status
 (
 Id int IDENTITY(1,1) PRIMARY KEY,
-Name varchar(255),
+Name nvarchar(255),
 CreatedTimeStamp datetime2 NOT NULL CONSTRAINT DF_Status_CreateDate_GETDATE DEFAULT GETDATE(),
 UpdatedTimeStamp datetime2
 )
@@ -28,7 +28,7 @@ SELECT * FROM Status
 CREATE TABLE Priority
 (
 Id int IDENTITY(1,1) PRIMARY KEY,
-Name varchar(255),
+Name nvarchar(255),
 CreatedTimeStamp datetime2 NOT NULL CONSTRAINT DF_Priority_CreateDate_GETDATE DEFAULT GETDATE(),
 UpdatedTimeStamp datetime2
 )

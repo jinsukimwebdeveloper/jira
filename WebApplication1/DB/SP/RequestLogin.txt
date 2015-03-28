@@ -1,8 +1,8 @@
 CREATE PROCEDURE [dbo].[RequestLogin] 
 (
 	--Input Parameter
-	@Email varchar(255),
-	@Password varchar(255)
+	@Email nvarchar(255),
+	@Password nvarchar(255)
 )
 AS
 BEGIN
@@ -13,11 +13,11 @@ BEGIN
 	BEGIN TRY  
 		--Output Parameter
 		DECLARE @Result int;
-		DECLARE @Description varchar(255);
+		DECLARE @Description nvarchar(255);
 		BEGIN TRAN   
 		
 		--Check Users is available
-		DECLARE @Userid varchar(255);
+		DECLARE @Userid nvarchar(255);
 		DECLARE @Status int;
 		SET @Userid = (SELECT UserId FROM Jira.dbo.Users WHERE Email = @Email);
 
