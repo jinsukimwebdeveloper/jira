@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "운영이슈";
 }
+@model Jira.Views.Dto.LoginModel
 <h2>@ViewBag.Title.</h2>
 <hr />
 <div id="IssueTable">
@@ -19,6 +20,10 @@
             </tr>
         </thead>
         <tbody>
+            @foreach(var item in Model)
+            {
+                
+            }
             <tr>
                 <td>#TS-0001</td>
                 <td>아이디 dhammi 로그인 실패</td>

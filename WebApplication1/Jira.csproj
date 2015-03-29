@@ -120,8 +120,11 @@
     <Compile Include="BL\Impl\LoginHandler.cs" />
     <Compile Include="BL\Interface\ILoginHandler.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="DL\Impl\IssueDataAccess.cs" />
     <Compile Include="DL\Impl\LoginDataAccess.cs" />
+    <Compile Include="DL\Interfaces\Dto\IssueListResult.cs" />
     <Compile Include="DL\Interfaces\Dto\LoginResult.cs" />
+    <Compile Include="DL\Interfaces\IissueDataAccess.cs" />
     <Compile Include="DL\Interfaces\ILoginDataAccess.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
