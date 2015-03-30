@@ -5,16 +5,30 @@
 }
 <script>
     $(document).ready(function () {
-        $("li").click(function() {
-            var pageNumber = this.id.replace("p_", "");
-            alert(pageNumber);
+        $("#p_1").addClass("active");
 
+        // Register click event handler
+        $("#issueListTable").on("click", "li", function () {
+            var pageNumber = this.id.replace("p_", "");
+            if (pageNumber == "" || pageNumber == null)
+                return;
+
+            if (pageNumber == "plus10")
+            {
+                // find 2nd li element's id
+                var liId = $("ul li:nth-child(2)").attr('id').replace("p_", "");
+                pageNumber = liId + 10;
+                alert(pageNumber);
+            }
+
+            //ajax call
             $.ajax({
                 url: '@Url.Action("GetIssueList", "Home")',
                 data: { pageNumber: pageNumber,  pageRows: '10'},
                 type: 'GET',
                 success: function (data) {
-                    $('#issueListTable').empty().prepend(data);
+                    $('#issueListTable').empty().append(data).clone();
+                    $('#p_' + pageNumber).addClass("active");
                 },
                 error: function () {
                     alert("Internal Error");
