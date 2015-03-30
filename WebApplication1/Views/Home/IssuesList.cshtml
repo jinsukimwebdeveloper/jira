@@ -3,6 +3,30 @@
 @{
     ViewBag.Title = "운영이슈";
 }
+<script>
+    $(document).ready(function () {
+        $("li").click(function() {
+            var pageNumber = this.id.replace("p_", "");
+            alert(pageNumber);
+
+            $.ajax({
+                url: '@Url.Action("GetIssueList", "Home")',
+                data: { pageNumber: pageNumber,  pageRows: '10'},
+                type: 'GET',
+                success: function (data) {
+                    $('#issueListTable').empty().prepend(data);
+                },
+                error: function () {
+                    alert("Internal Error");
+                }
+            });
+        });
+    });
+
+</script>
 <h2>운영이슈</h2>
-<hr/>
-@Html.Partial("_IssueListTable", Model);
+<hr />
+<div id="issueListTable">
+    @Html.Partial("_IssueListTable", Model);
+</div>
+
