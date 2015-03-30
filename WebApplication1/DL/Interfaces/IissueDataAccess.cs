@@ -6,8 +6,8 @@ using System.Web;
 
 namespace Jira.DL.Interfaces
 {
-    interface IissueDataAccess
+    public interface IissueDataAccess
     {
-        IssueListResult GetIssueList(DateTime startTime, DateTime endTime, int pageNumber, int pageRows);
+        IEnumerable<IssueListResult> GetIssueList(DateTime startTime, DateTime endTime, int pageNumber, int pageRows);
     }
 }

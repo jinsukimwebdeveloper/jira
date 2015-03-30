@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Jira.Views.Dto.IssueListModel>
+@{
+    var TotalRows = Jira.Views.Dto.IssueListModel.TotalRows;
+    var TotalPage = 0;
+}
+
+@if ((TotalRows % 10) != 0)
+{
+    TotalPage = TotalRows / 10 + 1;
+}
+else
+{
+    TotalPage = TotalRows / 10;
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>이슈</th>
+            <th>상태값</th>
+            <th>중요도</th>
+            <th>Fix Version</th>
+            <th>담당자</th>
+            <th>예상소요기간</th>
+            <th>완료날짜</th>
+            <th>작성자</th>
+            <th>등록날짜</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><p>JIRA#@item.Id.ToString("D4")</p></td>
+                <td><p>@item.Subject</p></td>
+                <td><p>@item.Status</p></td>
+                <td><p>@item.Priority</p></td>
+                <td><p>@item.FixVersion</p></td>
+                <td><p>@item.Assignee</p></td>
+                <td><p>@item.Estimate</p></td>
+                <td><p>@item.CompletedTimeStamp</p></td>
+                <td><p>@item.Repoter</p></td>
+                <td><p>@item.CreatedTimeStamp</p></td>
+            </tr>
+        }
+    </tbody>
+</table>
+<ul class="pagination">
+    <li>
+        <a href="#">&laquo;</a>
+    </li>
+    @for (var i = 0; i < @TotalPage; i++)
+    {
+        var Page = @i + 1;
+        <li id="p_@Page">
+            @if (Page > 10 && Page % 10 == 1)
+            {
+                <a href="#">...</a>
+                break;
+            }
+            else
+            {
+                <a href="#">@Page</a>
+            }
+        </li>
+    }
+    <li>
+        <a href="#">&raquo;</a>
+    </li>
+</ul>
+

@@ -14,11 +14,11 @@ namespace Jira.DL.Impl
     {
         private const int dbTimeout = 600;
 
-        public IssueListResult GetIssueList(DateTime startTime, DateTime endTime, int pageNumber, int pageRows)
+        public IEnumerable<IssueListResult> GetIssueList(DateTime startTime, DateTime endTime, int pageNumber, int pageRows)
         {
             Database db = new DatabaseProviderFactory().Create("JIRA");
-            IssueListResult result = new IssueListResult();
-            using (DbCommand cmd = db.GetStoredProcCommand("[dbo].[[GetIssueList]]"))
+            List<IssueListResult> result = new List<IssueListResult>();
+            using (DbCommand cmd = db.GetStoredProcCommand("[dbo].[GetIssueList]"))
             {
                 cmd.CommandTimeout = dbTimeout;
                 db.AddInParameter(cmd, "@StartDate", DbType.DateTime2, startTime);
@@ -28,18 +28,20 @@ namespace Jira.DL.Impl
                 DataSet ds = db.ExecuteDataSet(cmd);
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    result.Id = (int)ds.Tables[0].Rows[i]["SeqNo"];
-                    result.Subject = (string)ds.Tables[0].Rows[i]["Subject"];
-                    result.Status = (string)ds.Tables[0].Rows[i]["Status"];
-                    result.Priority = (string)ds.Tables[0].Rows[i]["Priority"];
-                    result.FixVersion = (string)ds.Tables[0].Rows[i]["FixVersion"];
-                    result.Estimate = (string)ds.Tables[0].Rows[i]["Estimate"];
-                    result.CompletedTimeStamp = (DateTime)ds.Tables[0].Rows[i]["CompletedTimeStamp"];
-                    result.Repoter = (string)ds.Tables[0].Rows[i]["Repoter"];
-                    result.CompletedTimeStamp = (DateTime)ds.Tables[0].Rows[i]["CreatedTimeStamp"];
+                    IssueListResult item = new IssueListResult();
+                    item.Id = (int)ds.Tables[0].Rows[i]["SeqNo"];
+                    item.Subject = (string)ds.Tables[0].Rows[i]["Subject"];
+                    item.Status = (string)ds.Tables[0].Rows[i]["Status"];
+                    item.Priority = (string)ds.Tables[0].Rows[i]["Priority"];
+                    item.FixVersion = (string)ds.Tables[0].Rows[i]["FixVersion"];
+                    item.Estimate = (string)ds.Tables[0].Rows[i]["Estimate"];
+                    item.Assignee = (string)ds.Tables[0].Rows[i]["Assignee"];
+                    item.CompletedTimeStamp = (DateTime)ds.Tables[0].Rows[i]["CompletedTimeStamp"];
+                    item.Repoter = (string)ds.Tables[0].Rows[i]["Repoter"];
+                    item.CompletedTimeStamp = (DateTime)ds.Tables[0].Rows[i]["CreatedTimeStamp"];
+                    result.Add(item);
                 }
                 IssueListResult.TotalCount = (int) ds.Tables[1].Rows[0]["TotalCount"];
-
             }
 
             return result;
