@@ -1,44 +1,8 @@
-﻿@{
+﻿@model IEnumerable<Jira.Views.Dto.IssueListModel>
+
+@{
     ViewBag.Title = "운영이슈";
 }
-@model IEnumerable<Jira.Views.Dto.IssueListModel>
-
-<script>
-    var currentPageNumber = 1;
-    $(document).ready(function () {
-        $("#p_" + currentPageNumber).addClass("active");
-
-        // Table Paging
-        $("li").click(function () {
-            var clickedPageNumber = this.id.replace("p_", "");
-            if (clickedPageNumber == currentPageNumber)
-                return;
-            // ajax call
-            $.ajax({
-                url: '@Url.Action("GetIssueList", "Home")',
-                data: {
-                    pageNumber: clickedPageNumber,
-                    pageRows: 10,
-                },
-                success: successFunc,
-                error: errorFunc
-            });
-            function successFunc(data)
-            {
-                $('#IssueTable').empty().prepend(data);
-                $("#p_" + clickedPageNumber).addClass("active");
-            }
-            function errorFunc()
-            {
-                alert("Internal Error.");
-            }
-        });
-
-    });
-</script>
-
-<h2>@ViewBag.Title.</h2>
-<hr />
-<div id="IssueTable">
-    @Html.Partial("_IssueListTable", Model);
-</div>
+<h2>운영이슈</h2>
+<hr/>
+@Html.Partial("_IssueListTable", Model);
