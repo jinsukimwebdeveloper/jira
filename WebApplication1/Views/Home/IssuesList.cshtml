@@ -14,25 +14,17 @@ else
 {
     TotalPage = TotalRows / 10;
 }
-<script>
-    function SetPageController(from, to) {
-        if(to >= Number(@TotalPage)) {
-            to = Number(@TotalPage);
-        }
-        var pageNumber = '<li id="leftPageClick"><a href="#">&laquo;</a></li>';
-        for (var i = from; i <= to; i++) {
-            pageNumber += ('<li><a href="#">' + i + '</a></li>');
-        }
-        $('.pagination').empty().append(pageNumber + '<li id="rightPageClick"><a href="#">&raquo;</a></li>').clone();
-        $('.active').removeClass('active');
-        $(".pagination :nth-child(2)").addClass("active")
+<style>
+    .buttonBox {
+        position: absolute;
+        bottom: 0;
+        right: 0;
     }
-
+</style>
+<script>
     $(document).ready(function () {
         // Page Controller
-        var from = 1;
-        var to = 10;
-        SetPageController(from, to);
+        SetPageController(1, 10);
 
         // Register click event handler
         $(".pagination").on("click", "li", pageNumberClickHandler);
@@ -45,13 +37,26 @@ else
         });
     });
 
+    function SetPageController(from, to) {
+        if (to >= Number(@TotalPage)) {
+            to = Number(@TotalPage);
+        }
+        var pageNumber = '<li id="leftPageClick"><a href="#">&laquo;</a></li>';
+        for (var i = from; i <= to; i++) {
+            pageNumber += ('<li><a href="#">' + i + '</a></li>');
+        }
+        $('.pagination').empty().append(pageNumber + '<li id="rightPageClick"><a href="#">&raquo;</a></li>').clone();
+        $('.active').removeClass('active');
+        $(".pagination :nth-child(2)").addClass("active")
+    }
+
+
     function pageNumberClickHandler(event) {
         var pageNumber;
 
         if ($(this).attr('id') == 'leftPageClick') {
             var firstNumber = parseInt($(".pagination :nth-child(2)").text());
-            if(firstNumber != 1)
-            {
+            if (firstNumber != 1) {
                 var from = firstNumber - 10;
                 var to = firstNumber - 1;
                 SetPageController(from, to);
@@ -63,7 +68,7 @@ else
         else if ($(this).attr('id') == 'rightPageClick') {
             var firstNumber = parseInt($(".pagination :nth-child(2)").text());
             var from = firstNumber + 10;
-            if(from < Number(@TotalPage)) {
+            if (from < Number(@TotalPage)) {
                 var to = from + 9;
                 if (to >= Number(@TotalPage)) {
                     to = Number(@TotalPage);
@@ -94,7 +99,12 @@ else
         });
     }
 </script>
-<h2>운영이슈</h2>
+
+<div class="row">
+    <div class="col-md-2"><h2>운영이슈</h2></div>
+    <div class="col-md-1 buttonBox"><button id="createIssue" type="button" class="btn btn-default">이슈 등록</button></div>
+</div>
+
 <hr />
 <div id="issueListTable">
     @Html.Partial("_IssueListTable", Model)
