@@ -15,6 +15,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <style>
         .form-signin {
             max-width: 330px;
@@ -31,15 +32,32 @@
 <body>
     <script>
         $(document).ready(function () {
+            // hide error msg block initially
             $("#errorMsgBlock").hide();
+            $("#loadingIcon").hide();
 
             $("#inputPassword").focus(function () {
                 if ($("#inputPassword").val() == "") {
                     $("#errorMsgBlock").hide();
                 }
             })
+
+            // show loading icon
+            $(document).ajaxSend(function (event, request, settings) {
+                // disable button after click.
+                $('button').prop('disabled', true);
+                $('#loadingIcon').show();
+            });
+
+            // hide loading icon
+            $(document).ajaxComplete(function (event, request, settings) {
+                // enable button after ajax call.
+                $('button').prop('disabled', false);
+                $('#loadingIcon').hide();
+            })
         });
 
+        // ajax success handler
         function OnSuccess(response) {
             if (response.Result == -1 || response.Result == -2) {
                 // display error message
@@ -55,6 +73,7 @@
             }
         }
 
+        // ajax failure handler
         function OnFailure(response) {
             // display error message
             $("#errorMsgBlock").show();
@@ -98,7 +117,10 @@
                         <input type="checkbox" value="remember-me"> 로그인 유지
                     </label>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg btn-block">로그인</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                    <i id="loadingIcon" class="fa fa-cog fa-spin"></i>
+                    로그인
+                </button>
             </div>
         }
     </div> <!-- /container -->
