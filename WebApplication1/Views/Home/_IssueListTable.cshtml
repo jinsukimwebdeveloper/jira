@@ -1,17 +1,4 @@
 ﻿@model IEnumerable<Jira.Views.Dto.IssueListModel>
-@{
-    var TotalRows = Jira.Views.Dto.IssueListModel.TotalRows;
-    var TotalPage = 0;
-}
-
-@if ((TotalRows % 10) != 0)
-{
-    TotalPage = TotalRows / 10 + 1;
-}
-else
-{
-    TotalPage = TotalRows / 10;
-}
 <table class="table table-hover">
     <thead>
         <tr>
@@ -45,27 +32,3 @@ else
         }
     </tbody>
 </table>
-<ul class="pagination">
-    <li id="minus10">
-        <a href="#">&laquo;</a>
-    </li>
-    @for (var i = 0; i < @TotalPage; i++)
-    {
-        var Page = @i + 1;
-        <li id="p_@Page">
-            @if (Page > 10 && Page % 10 == 1)
-            {
-                <a href="#">...</a>
-                break;
-            }
-            else
-            {
-                <a href="#">@Page</a>
-            }
-        </li>
-    }
-    <li id="plus10">
-        <a href="#">&raquo;</a>
-    </li>
-</ul>
-

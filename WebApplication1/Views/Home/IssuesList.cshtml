@@ -1,27 +1,82 @@
 ﻿@model IEnumerable<Jira.Views.Dto.IssueListModel>
-
 @{
     ViewBag.Title = "운영이슈";
 }
+@{
+    var TotalRows = Jira.Views.Dto.IssueListModel.TotalRows;
+    var TotalPage = 0;
+}
+@if ((TotalRows % 10) != 0)
+{
+    TotalPage = TotalRows / 10 + 1;
+}
+else
+{
+    TotalPage = TotalRows / 10;
+}
 <script>
+    function SetPageController(from, to) {
+        if(to >= Number(@TotalPage)) {
+            to = Number(@TotalPage);
+        }
+        var pageNumber = '<li id="leftPageClick"><a href="#">&laquo;</a></li>';
+        for (var i = from; i <= to; i++) {
+            pageNumber += ('<li><a href="#">' + i + '</a></li>');
+        }
+        $('.pagination').empty().append(pageNumber + '<li id="rightPageClick"><a href="#">&raquo;</a></li>').clone();
+        $('.active').removeClass('active');
+        $(".pagination :nth-child(2)").addClass("active")
+    }
+
     $(document).ready(function () {
-        $("#p_1").addClass("active");
+        // Page Controller
+        var from = 1;
+        var to = 10;
+        SetPageController(from, to);
 
         // Register click event handler
-        $("#issueListTable").on("click", "li", pageNumberClickHandler);
+        $(".pagination").on("click", "li", pageNumberClickHandler);
+
+        // Chnage mouse cursor to wait while ajax loading
+        $('body').ajaxStart(function () {
+            $(this).css({ 'cursor': 'wait' })
+        }).ajaxStop(function () {
+            $(this).css({ 'cursor': 'default' })
+        });
     });
 
-    function pageNumberClickHandler(event)
-    {
-        var pageNumber = $(this).attr('id').replace("p_", "");
-        if (pageNumber == "" || pageNumber == null)
-            return;
+    function pageNumberClickHandler(event) {
+        var pageNumber;
 
-        if (pageNumber == "plus10") {
-            // find 2nd li element's id
-            var liId = $("ul li:nth-child(2)").attr('id').replace("p_", "");
-            pageNumber = liId + 10;
-            alert(pageNumber);
+        if ($(this).attr('id') == 'leftPageClick') {
+            var firstNumber = parseInt($(".pagination :nth-child(2)").text());
+            if(firstNumber != 1)
+            {
+                var from = firstNumber - 10;
+                var to = firstNumber - 1;
+                SetPageController(from, to);
+                pageNumber = from;
+            } else {
+                return;
+            }
+        }
+        else if ($(this).attr('id') == 'rightPageClick') {
+            var firstNumber = parseInt($(".pagination :nth-child(2)").text());
+            var from = firstNumber + 10;
+            if(from < Number(@TotalPage)) {
+                var to = from + 9;
+                if (to >= Number(@TotalPage)) {
+                    to = Number(@TotalPage);
+                }
+                SetPageController(from, to);
+                pageNumber = from;
+            } else {
+                return;
+            }
+        } else {
+            pageNumber = parseInt($(this.childNodes).text());
+            $('.active').removeClass('active');
+            $(this).addClass("active");
         }
 
         //ajax call
@@ -42,6 +97,7 @@
 <h2>운영이슈</h2>
 <hr />
 <div id="issueListTable">
-    @Html.Partial("_IssueListTable", Model);
+    @Html.Partial("_IssueListTable", Model)
 </div>
+<ul class="pagination"></ul>
 
