@@ -14,6 +14,8 @@ else
 {
     TotalPage = TotalRows / 10;
 }
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
     $(document).ready(function () {
         // Page Controller
@@ -28,7 +30,23 @@ else
         }).ajaxStop(function () {
             $(this).css({ 'cursor': 'default' })
         });
+
+        // DatePicker
+        $("#InputFrom").datepicker();
+        $("#InputTo").datepicker();
+
+        // For 6 month only.
+        var today = new Date();
+        var to = $.datepicker.formatDate('mm/dd/yy', today);
+        var from = $.datepicker.formatDate('mm/dd/yy', new Date().addMonths(-6));
+        $("#InputFrom").val(from);
+        $("#InputTo").val(to);
     });
+
+    Date.prototype.addMonths = function (n) {
+        this.setMonth(this.getMonth() + n);
+        return this;
+    }
 
     function SetPageController(from, to) {
         if (to >= Number(@TotalPage)) {
