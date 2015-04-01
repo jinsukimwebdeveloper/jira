@@ -14,13 +14,6 @@ else
 {
     TotalPage = TotalRows / 10;
 }
-<style>
-    .buttonBox {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-    }
-</style>
 <script>
     $(document).ready(function () {
         // Page Controller
@@ -100,12 +93,29 @@ else
     }
 </script>
 
-<div class="row">
-    <div class="col-md-2"><h2>운영이슈</h2></div>
-    <div class="col-md-1 buttonBox"><button id="createIssue" type="button" class="btn btn-default">이슈 등록</button></div>
-</div>
+<h2>운영이슈</h2>
 
 <hr />
+
+<div class="row">
+    <div class="col-md-7">
+        <form class="form-inline">
+            <div class="form-group">
+                <label class="sr-only" for="InputFrom">Email address</label>
+                <input class="form-control" id="InputFrom" placeholder="From">
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="InputTo">Password</label>
+                <input class="form-control" id="InputTo" placeholder="To">
+            </div>
+            <button id="searchTableBtn" type="button" class="btn btn-default">검색</button>
+            <button id="createIssueBtn" type="button" class="btn btn-success">등록</button>
+        </form>
+    </div>
+</div>
+
+<br />
+
 <div id="issueListTable">
     @Html.Partial("_IssueListTable", Model)
 </div>
