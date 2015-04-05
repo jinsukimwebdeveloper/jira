@@ -43,17 +43,13 @@ namespace Jira.Controllers
             return PartialView("_IssueListTable", model);
         }
 
-        public ActionResult About()
+        public ActionResult IssueListCreate()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult IssueListEdit()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }
