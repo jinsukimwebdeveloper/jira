@@ -36,12 +36,6 @@
             $("#errorMsgBlock").hide();
             $("#loadingIcon").hide();
 
-            $("#inputPassword").focus(function () {
-                if ($("#inputPassword").val() == "") {
-                    $("#errorMsgBlock").hide();
-                }
-            })
-
             // show loading icon
             $(document).ajaxSend(function (event, request, settings) {
                 // disable button after click.
