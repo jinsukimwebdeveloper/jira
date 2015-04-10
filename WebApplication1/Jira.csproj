@@ -138,6 +138,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DB\SP\CreateIssue.txt" />
     <Content Include="DB\SP\GetIssueList.txt" />
     <Content Include="DB\SP\RequestLogin.txt" />
     <Content Include="DB\Table\Constant.txt" />
@@ -180,6 +181,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\IssuesList.cshtml" />
+    <Content Include="Views\Home\_CreateIssueModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

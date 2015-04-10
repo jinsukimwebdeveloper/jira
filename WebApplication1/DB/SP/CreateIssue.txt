@@ -1,0 +1,52 @@
+﻿CREATE PROCEDURE [dbo].[CreateIssue] 
+(
+	--Input Parameter
+	@StartDate datetime2,
+	@EndDate datetime2,
+	@PageNumber int,
+	@PageRows int
+)
+AS
+BEGIN
+	SET NOCOUNT ON;  
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;  
+	SET LOCK_TIMEOUT 20000;  
+
+	BEGIN TRY  
+		DECLARE @Tbl Table(
+			SeqNo int IDENTITY(1, 1) PRIMARY KEY, 
+			Subject nvarchar(255), 
+			Status nvarchar(255),
+			Priority nvarchar(255),
+			FixVersion nvarchar(255),
+			Assignee nvarchar(255),
+			Estimate nvarchar(255),
+			CompletedTimeStamp datetime2,
+			Repoter nvarchar(255),
+			CreatedTimeStamp datetime2
+		)
+
+		INSERT INTO @Tbl
+			SELECT I.Subject, S.Name AS Status, P.Name AS Priority, I.FixVersion, U.Name AS Assignee, I.Estimate, 
+				ISNULL(CompletedTimeStamp, '') AS CompletedTimeStamp, U1.Name AS Repoter, I.CreatedTimeStamp
+					FROM [Jira].[dbo].[Issues] I 
+					LEFT JOIN [Jira].[dbo].[Status] S 
+					ON I.Status = S.Id
+					LEFT JOIN [Jira].[dbo].[Users] U
+					ON I.Assignee = U.UserId
+					LEFT JOIN [Jira].[dbo].[Users] U1
+					ON I.Reporter = U1.UserId
+					LEFT JOIN [Jira].[dbo].[Priority] P
+					ON I.Priority = P.Id
+				WHERE I.CreatedTimeStamp >= @StartDate AND  I.CreatedTimeStamp <= @EndDate
+
+		SELECT * FROM @Tbl 
+		WHERE SeqNo>=((@PageNumber-1)*@PageRows)+1 AND SeqNo<=@PageNumber*@PageRows  
+		ORDER BY SeqNo;  
+
+		SELECT (SELECT COUNT(*) FROM @TBL) AS TotalCount
+	END TRY
+
+	BEGIN CATCH
+	END CATCH
+END
