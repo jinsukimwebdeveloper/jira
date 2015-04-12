@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Jira.Views.Dto
 {
-    public class IssueListModel
+    public class IssueListTableModel
     {
         public int Id { get; set; }
         public string Subject { get; set; }

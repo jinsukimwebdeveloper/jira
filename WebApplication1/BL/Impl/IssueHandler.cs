@@ -18,14 +18,14 @@ namespace Jira.BL.Impl
             _issueDataAccess = issueDataAccess;
         }
 
-        public IEnumerable<IssueListModel> GetIssueListMoel(DateTime startTime, DateTime endTime, int pageNumber, int pageRows)
+        public IEnumerable<IssueListTableModel> GetIssueListMoel(DateTime startTime, DateTime endTime, int pageNumber, int pageRows)
         {
-            List<IssueListModel> result = new List<IssueListModel>();
+            List<IssueListTableModel> result = new List<IssueListTableModel>();
             IEnumerable<IssueListResult> issueListResult = _issueDataAccess.GetIssueList(startTime, endTime, pageNumber, pageRows);
-            IssueListModel.TotalRows = IssueListResult.TotalCount;
+            IssueListTableModel.TotalRows = IssueListResult.TotalCount;
             foreach (IssueListResult item in issueListResult)
             {
-                IssueListModel model = new IssueListModel();
+                IssueListTableModel model = new IssueListTableModel();
                 model.Id = item.Id;
                 model.Subject = item.Subject;
                 model.Status = item.Status;

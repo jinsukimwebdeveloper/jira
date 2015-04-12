@@ -8,6 +8,6 @@ namespace Jira.BL.Interface
 {
     public interface IissueHandler
     {
-        IEnumerable<IssueListModel> GetIssueListMoel(DateTime startTime, DateTime endTime, int pageNumber, int pageRows);
+        IEnumerable<IssueListTableModel> GetIssueListMoel(DateTime startTime, DateTime endTime, int pageNumber, int pageRows);
     }
 }

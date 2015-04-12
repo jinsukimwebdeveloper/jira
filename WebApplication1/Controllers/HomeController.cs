@@ -31,7 +31,8 @@ namespace Jira.Controllers
         public ActionResult IssuesList()
         {
             IissueHandler handler = new IssueHandler(new IssueDataAccess());
-            IEnumerable<IssueListModel> model = handler.GetIssueListMoel(DateTime.Parse("2015-01-01"), DateTime.Parse("2015-12-31"), 1, 10);
+            IEnumerable<IssueListTableModel> model = handler.GetIssueListMoel(DateTime.Parse("2015-01-01"), DateTime.Parse("2015-12-31"), 1, 10);
+            ViewData["CreateIssueModel"] = new CreateIssueModel();
             return View(model);
         }
 
@@ -39,7 +40,7 @@ namespace Jira.Controllers
         public ActionResult GetIssueList(int pageNumber, int pageRows)
         {
             IissueHandler handler = new IssueHandler(new IssueDataAccess());
-            IEnumerable<IssueListModel> model = handler.GetIssueListMoel(DateTime.Parse("2015-01-01"), DateTime.Parse("2015-12-31"), pageNumber, pageRows);
+            IEnumerable<IssueListTableModel> model = handler.GetIssueListMoel(DateTime.Parse("2015-01-01"), DateTime.Parse("2015-12-31"), pageNumber, pageRows);
             return PartialView("_IssueListTable", model);
         }
 
