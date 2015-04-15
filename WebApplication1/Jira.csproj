@@ -124,6 +124,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DL\Impl\IssueDataAccess.cs" />
     <Compile Include="DL\Impl\LoginDataAccess.cs" />
+    <Compile Include="DL\Interfaces\Dto\ComponentResult.cs" />
+    <Compile Include="DL\Interfaces\Dto\CreateIssueResult.cs" />
+    <Compile Include="DL\Interfaces\Dto\PriorityResult.cs" />
+    <Compile Include="DL\Interfaces\Dto\UserResult.cs" />
     <Compile Include="DL\Interfaces\Dto\IssueListResult.cs" />
     <Compile Include="DL\Interfaces\Dto\LoginResult.cs" />
     <Compile Include="DL\Interfaces\IissueDataAccess.cs" />
@@ -139,6 +143,9 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DB\SP\GetComponent.txt" />
+    <Content Include="DB\SP\GetUsers.txt" />
+    <Content Include="DB\SP\GetPriority.txt" />
     <Content Include="DB\SP\CreateIssue.txt" />
     <Content Include="DB\SP\GetIssueList.txt" />
     <Content Include="DB\SP\RequestLogin.txt" />

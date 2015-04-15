@@ -1,9 +1,9 @@
-﻿@model IEnumerable<Jira.Views.Dto.IssueListModel>
+﻿@model IEnumerable<Jira.Views.Dto.IssueListTableModel>
 @{
     ViewBag.Title = "운영이슈";
 }
 @{
-    var TotalRows = Jira.Views.Dto.IssueListModel.TotalRows;
+    var TotalRows = Jira.Views.Dto.IssueListTableModel.TotalRows;
     var TotalPage = 0;
 }
 @if ((TotalRows % 10) != 0)
@@ -138,15 +138,14 @@ else
         </form>
     </div>
 </div>
-
-<div id="createIssueModal">
-    @Html.Partial("_CreateIssueModal", ViewData["IssueListModel"])
-</div>
-
 <br />
 
 <div id="issueListTable">
     @Html.Partial("_IssueListTable", Model)
 </div>
 <ul class="pagination"></ul>
+
+<div id="createIssueModal">
+    @Html.Partial("_CreateIssueModal", ViewData["CreateIssueModel"])
+</div>
 

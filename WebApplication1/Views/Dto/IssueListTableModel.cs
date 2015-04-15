@@ -15,9 +15,9 @@ namespace Jira.Views.Dto
         public string Assignee { get; set; }
         public string Estimate { get; set; }
         public string Description { get; set; }
-        public DateTime CompletedTimeStamp { get; set; }
+        public string CompletedTimeStamp { get; set; }
         public string Repoter { get; set; }
-        public DateTime CreatedTimeStamp { get; set; }
+        public string CreatedTimeStamp { get; set; }
         public static int TotalRows { get; set; }
     }
 }

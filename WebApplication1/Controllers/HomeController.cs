@@ -31,8 +31,49 @@ namespace Jira.Controllers
         public ActionResult IssuesList()
         {
             IissueHandler handler = new IssueHandler(new IssueDataAccess());
-            IEnumerable<IssueListTableModel> model = handler.GetIssueListMoel(DateTime.Parse("2015-01-01"), DateTime.Parse("2015-12-31"), 1, 10);
-            ViewData["CreateIssueModel"] = new CreateIssueModel();
+
+            // Retrieve the issue list for the past 6 months only
+            DateTime to = DateTime.Now.AddDays(1);
+            DateTime from = DateTime.Now.AddMonths(-6);
+            IEnumerable<IssueListTableModel> model = handler.GetIssueListMoel(from, to, 1, 10);
+            CreateIssueModel createIssueModel = new CreateIssueModel();
+
+            // Priority dropdown list
+            List<SelectListItem> priorityList = new List<SelectListItem>();
+            IEnumerable<PriorityResult> priorityResult = handler.GetPriority();
+            foreach (PriorityResult priority in priorityResult)
+            {
+                priorityList.Add(new SelectListItem { Text = priority.Name, Value = priority.Id.ToString() });
+            }
+            createIssueModel.PriorityList = priorityList;
+
+            // Owner dropdown list
+            List<SelectListItem> ownerList = new List<SelectListItem>();
+            IEnumerable<UserResult> userResult = handler.GetUsers();
+            foreach (UserResult user in userResult)
+            {
+                ownerList.Add(new SelectListItem { Text = user.Name, Value = user.Id.ToString() });
+            }
+            createIssueModel.OwnerList = ownerList;
+
+            // Component list
+            List<SelectListItem> componentList = new List<SelectListItem>();
+            IEnumerable<ComponentResult> componentResult = handler.GetComponent();
+            foreach (ComponentResult component in componentResult)
+            {
+                componentList.Add(new SelectListItem { Text = component.Name, Value = component.Id.ToString() });
+            }
+            createIssueModel.ComponentList = componentList;
+
+            // Estimate list
+            List<SelectListItem> estimateList = new List<SelectListItem>();
+            for(int i = 1; i < 5; i++)
+            {
+                estimateList.Add(new SelectListItem { Text = i + "MD", Value = i.ToString() });
+            }
+            createIssueModel.EstimateList = estimateList;
+
+            ViewData["CreateIssueModel"] = createIssueModel;
             return View(model);
         }
 
@@ -44,14 +85,11 @@ namespace Jira.Controllers
             return PartialView("_IssueListTable", model);
         }
 
-        public ActionResult IssueListCreate()
+        [HttpPost]
+        public int CreateIssue(CreateIssueModel model)
         {
-            return View();
-        }
-
-        public ActionResult IssueListEdit()
-        {
-            return View();
+            IissueHandler handler = new IssueHandler(new IssueDataAccess());
+            return handler.CreateIssue(model);
         }
     }
 }

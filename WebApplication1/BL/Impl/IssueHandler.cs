@@ -33,13 +33,42 @@ namespace Jira.BL.Impl
                 model.FixVersion = item.FixVersion;
                 model.Assignee = item.Assignee;
                 model.Estimate = item.Estimate;
-                model.CompletedTimeStamp = item.CompletedTimeStamp;
+                model.CompletedTimeStamp = (item.CompletedTimeStamp.Year == 1900) ? "open" : item.CompletedTimeStamp.ToShortDateString();
                 model.Repoter = item.Repoter;
-                model.CreatedTimeStamp = item.CreatedTimeStamp;
+                model.CreatedTimeStamp = item.CreatedTimeStamp.ToShortDateString();
                 result.Add(model);
             }
             return result;
         }
 
+        public int CreateIssue(CreateIssueModel model)
+        {
+            CreateIssueResult result = new CreateIssueResult();
+            result.Subject = model.Subject;
+            result.FixVersion = model.FixVersion;
+            result.Estimate = model.Estimate;
+            result.Description = model.Description;
+            result.Priority = model.Priority;
+            result.Owner = model.Owner;
+            result.Repoter = model.Repoter;
+            result.Component = model.Component;
+
+            return _issueDataAccess.CreateIssue(result);
+        }
+
+        public IEnumerable<UserResult> GetUsers()
+        {
+            return _issueDataAccess.GetUsers();
+        }
+
+        public IEnumerable<PriorityResult> GetPriority()
+        {
+            return _issueDataAccess.GetPriority();
+        }
+
+        public IEnumerable<ComponentResult> GetComponent()
+        {
+            return _issueDataAccess.GetComponent();
+        }
     }
 }

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 
-namespace Jira.Views.Dto
+namespace Jira.DL.Interfaces.Dto
 {
-    public class CreateIssueModel
+    public class CreateIssueResult
     {
         public string Subject { get; set; }
         public string FixVersion { get; set; }
@@ -16,10 +15,5 @@ namespace Jira.Views.Dto
         public int Owner { get; set; }
         public int Repoter { get; set; }
         public int Component { get; set; }
-
-        public IEnumerable<SelectListItem> PriorityList { get; set; }
-        public IEnumerable<SelectListItem> OwnerList { get; set; }
-        public IEnumerable<SelectListItem> ComponentList { get; set; }
-        public IEnumerable<SelectListItem> EstimateList { get; set; }
     }
 }

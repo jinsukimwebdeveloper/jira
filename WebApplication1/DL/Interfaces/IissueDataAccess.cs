@@ -9,5 +9,13 @@ namespace Jira.DL.Interfaces
     public interface IissueDataAccess
     {
         IEnumerable<IssueListResult> GetIssueList(DateTime startTime, DateTime endTime, int pageNumber, int pageRows);
+
+        IEnumerable<UserResult> GetUsers();
+
+        IEnumerable<PriorityResult> GetPriority();
+
+        IEnumerable<ComponentResult> GetComponent();
+
+        int CreateIssue(CreateIssueResult createIssueResult);
     }
 }
