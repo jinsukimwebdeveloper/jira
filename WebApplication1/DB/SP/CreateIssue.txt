@@ -3,7 +3,7 @@
 	--Input Parameter
 	@Subject nvarchar(255),
 	@FixVersion nvarchar(10),
-	@Estimate nvarchar(10),
+	@Estimate int,
 	@Description nvarchar(1000),
 	@Priority int,
 	@Owner int,
@@ -18,8 +18,8 @@ BEGIN
 	SET LOCK_TIMEOUT 20000;  
 
 	BEGIN TRY  
-		INSERT INTO dbo.Issues (Subject, Status, Components, Priority, FixVersion, Description, Assignee, Reporter)
-		VALUES(@Subject, 1, @Component, @Priority, @FixVersion, @Description, @Owner, @Repoter)
+		INSERT INTO dbo.Issues (Subject, Status, Components, Priority, FixVersion, Description, Assignee, Reporter, Estimate)
+		VALUES(@Subject, 1, @Component, @Priority, @FixVersion, @Description, @Owner, @Repoter, @Estimate)
 		SET @Result = 1
 	END TRY
 

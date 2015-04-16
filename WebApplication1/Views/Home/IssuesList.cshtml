@@ -19,16 +19,18 @@ else
 <script>
     $(document).ready(function () {
         // Page Controller
-        SetPageController(1, 10);
+        if (Number(@TotalPage) != 0) {
+            SetPageController(1, 10);
+        }
 
         // Register click event handler
         $(".pagination").on("click", "li", pageNumberClickHandler);
 
-        // Chnage mouse cursor to wait while ajax loading
+        // Loading icon
         $('body').ajaxStart(function () {
-            $(this).css({ 'cursor': 'wait' })
+
         }).ajaxStop(function () {
-            $(this).css({ 'cursor': 'default' })
+
         });
 
         // DatePicker
