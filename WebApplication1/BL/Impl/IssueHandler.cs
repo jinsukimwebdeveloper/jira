@@ -50,10 +50,35 @@ namespace Jira.BL.Impl
             result.Description = model.Description;
             result.Priority = model.Priority;
             result.Owner = model.Owner;
-            result.Repoter = model.Repoter;
+            result.Repoter = GetLoginUser();
             result.Component = model.Component;
 
             return _issueDataAccess.CreateIssue(result);
+        }
+
+        public IssueListTableModel FindIssues(int id)
+        {
+            IssueListTableModel model = new IssueListTableModel();
+            IssueListResult result = _issueDataAccess.FindIssue(id);
+            model.Id = result.Id;
+            model.Subject = result.Subject;
+            model.Status = result.Status;
+            model.Priority = result.Priority;
+            model.FixVersion = result.FixVersion;
+            model.Assignee = result.Assignee;
+            model.Estimate = result.Estimate;
+            model.Description = result.Description;
+            model.CompletedTimeStamp = result.CompletedTimeStamp.ToShortDateString();
+            model.Repoter = result.Repoter;
+            model.CreatedTimeStamp = result.CreatedTimeStamp.ToShortDateString();
+
+            return model;
+        }
+
+        private int GetLoginUser()
+        {
+            // TODO
+            return 1;
         }
 
         public IEnumerable<UserResult> GetUsers()

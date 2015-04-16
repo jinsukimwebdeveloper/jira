@@ -18,5 +18,7 @@ namespace Jira.BL.Interface
         IEnumerable<ComponentResult> GetComponent();
 
         int CreateIssue(CreateIssueModel model);
+
+        IssueListTableModel FindIssues(int id);
     }
 }

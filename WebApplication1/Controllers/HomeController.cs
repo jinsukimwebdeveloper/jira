@@ -67,7 +67,7 @@ namespace Jira.Controllers
 
             // Estimate list
             List<SelectListItem> estimateList = new List<SelectListItem>();
-            for(int i = 1; i < 5; i++)
+            for(int i = 1; i <= 5; i++)
             {
                 estimateList.Add(new SelectListItem { Text = i + "MD", Value = i.ToString() });
             }
@@ -90,6 +90,15 @@ namespace Jira.Controllers
         {
             IissueHandler handler = new IssueHandler(new IssueDataAccess());
             return handler.CreateIssue(model);
+        }
+
+        public ActionResult Detail(int id)
+        {
+            // Find the issue detail
+            IissueHandler handler = new IssueHandler(new IssueDataAccess());
+            IssueListTableModel model = handler.FindIssues(id);
+
+            return View(model);
         }
     }
 }

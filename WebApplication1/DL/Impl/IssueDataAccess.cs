@@ -29,7 +29,7 @@ namespace Jira.DL.Impl
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
                     IssueListResult item = new IssueListResult();
-                    item.Id = (int)ds.Tables[0].Rows[i]["SeqNo"];
+                    item.Id = (int)ds.Tables[0].Rows[i]["Id"];
                     item.Subject = DBNull.Value.Equals(ds.Tables[0].Rows[i]["Subject"]) ? "" : (string)ds.Tables[0].Rows[i]["Subject"];
                     item.Status = DBNull.Value.Equals(ds.Tables[0].Rows[i]["Status"]) ? "" : (string)ds.Tables[0].Rows[i]["Status"];
                     item.Priority = DBNull.Value.Equals(ds.Tables[0].Rows[i]["Priority"]) ? "" : (string)ds.Tables[0].Rows[i]["Priority"];
@@ -115,14 +115,38 @@ namespace Jira.DL.Impl
                 db.AddInParameter(cmd, "@Estimate", DbType.String, createIssueResult.Estimate);
                 db.AddInParameter(cmd, "@Description", DbType.String, createIssueResult.Description);
                 db.AddInParameter(cmd, "@Priority", DbType.Int32, createIssueResult.Priority);
-                db.AddInParameter(cmd, "@Owner", DbType.Int32, createIssueResult.Priority);
-                db.AddInParameter(cmd, "@Repoter", DbType.Int32, createIssueResult.Priority);
-                db.AddInParameter(cmd, "@Component", DbType.Int32, createIssueResult.Priority);
+                db.AddInParameter(cmd, "@Owner", DbType.Int32, createIssueResult.Owner);
+                db.AddInParameter(cmd, "@Repoter", DbType.Int32, createIssueResult.Repoter);
+                db.AddInParameter(cmd, "@Component", DbType.Int32, createIssueResult.Component);
                 db.AddOutParameter(cmd, "@Result", DbType.Int32, 4);
                 DataSet ds = db.ExecuteDataSet(cmd);
 
                 return (int)db.GetParameterValue(cmd, "@Result");
             }
+        }
+
+        public IssueListResult FindIssue(int id)
+        {
+            Database db = new DatabaseProviderFactory().Create("JIRA");
+            IssueListResult result = new IssueListResult();
+            using (DbCommand cmd = db.GetStoredProcCommand("[dbo].[FindIssue]"))
+            {
+                cmd.CommandTimeout = dbTimeout;
+                db.AddInParameter(cmd, "@Id", DbType.Int32, id);
+                DataSet ds = db.ExecuteDataSet(cmd);
+                result.Id = (int)ds.Tables[0].Rows[0]["Id"];
+                result.Subject = DBNull.Value.Equals(ds.Tables[0].Rows[0]["Subject"]) ? "" : (string)ds.Tables[0].Rows[0]["Subject"];
+                result.Status = DBNull.Value.Equals(ds.Tables[0].Rows[0]["Status"]) ? "" : (string)ds.Tables[0].Rows[0]["Status"];
+                result.Priority = DBNull.Value.Equals(ds.Tables[0].Rows[0]["Priority"]) ? "" : (string)ds.Tables[0].Rows[0]["Priority"];
+                result.FixVersion = DBNull.Value.Equals(ds.Tables[0].Rows[0]["FixVersion"]) ? "" : (string)ds.Tables[0].Rows[0]["FixVersion"];
+                result.Estimate = DBNull.Value.Equals(ds.Tables[0].Rows[0]["Estimate"]) ? "" : (string)ds.Tables[0].Rows[0]["Estimate"];
+                result.Assignee = DBNull.Value.Equals(ds.Tables[0].Rows[0]["Assignee"]) ? "" : (string)ds.Tables[0].Rows[0]["Assignee"];
+                result.CompletedTimeStamp = (DateTime)ds.Tables[0].Rows[0]["CompletedTimeStamp"];
+                result.Repoter = DBNull.Value.Equals(ds.Tables[0].Rows[0]["Repoter"]) ? "" : (string)ds.Tables[0].Rows[0]["Repoter"];
+                result.Description = DBNull.Value.Equals(ds.Tables[0].Rows[0]["Description"]) ? "" : (string)ds.Tables[0].Rows[0]["Description"]; 
+                result.CreatedTimeStamp = (DateTime)ds.Tables[0].Rows[0]["CreatedTimeStamp"];
+            }
+            return result;
         }
     }
 }

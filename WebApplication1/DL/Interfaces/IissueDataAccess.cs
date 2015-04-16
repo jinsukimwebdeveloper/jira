@@ -17,5 +17,7 @@ namespace Jira.DL.Interfaces
         IEnumerable<ComponentResult> GetComponent();
 
         int CreateIssue(CreateIssueResult createIssueResult);
+
+        IssueListResult FindIssue(int id);
     }
 }

@@ -18,7 +18,8 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td><p>@Html.ActionLink("JIRA#" + @item.Id.ToString("D4"), "Edit")</p></td>
+                <td><p>@Html.ActionLink("JIRA#" + @item.Id.ToString("D4"), "Detail/" + @item.Id)</p>
+                </td>
                 <td><p>@item.Subject</p></td>
                 <td><p>@item.Status</p></td>
                 <td><p>@item.Priority</p></td>

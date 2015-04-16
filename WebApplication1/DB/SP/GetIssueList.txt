@@ -14,7 +14,8 @@ BEGIN
 
 	BEGIN TRY  
 		DECLARE @Tbl Table(
-			SeqNo int IDENTITY(1, 1) PRIMARY KEY, 
+			SeqNo int IDENTITY(1,1) PRIMARY KEY,
+			Id int, 
 			Subject nvarchar(255), 
 			Status nvarchar(255),
 			Priority nvarchar(255),
@@ -27,7 +28,7 @@ BEGIN
 		)
 
 		INSERT INTO @Tbl
-			SELECT I.Subject, S.Name AS Status, P.Name AS Priority, I.FixVersion, U.Name AS Assignee, CONVERT(varchar(10),I.Estimate) + 'MD', 
+			SELECT I.Id, I.Subject, S.Name AS Status, P.Name AS Priority, I.FixVersion, U.Name AS Assignee, CONVERT(varchar(10),I.Estimate) + 'MD', 
 				ISNULL(CompletedTimeStamp, '') AS CompletedTimeStamp, U1.Name AS Repoter, I.CreatedTimeStamp
 					FROM [Jira].[dbo].[Issues] I 
 					LEFT JOIN [Jira].[dbo].[Status] S 
