@@ -4,94 +4,101 @@
     ViewBag.Title = "이슈 상세 내용";
 }
 
+<style>
+    .mainSection {
+        float: left;
+        width: 600px;
+        height: 600px;
+        padding: 10px;
+        border: 1px dashed 
+    }
 
-<div class="row">
-    <h3>JIRA#@Model.Id.ToString("D4")/@Html.DisplayFor(model => model.Subject)</h3>
+    .subSection {
+        margin-left: 600px;
+        width: 300px;
+        height: 200px;
+        padding: 10px;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        // Active 운영이슈 Tab
+        $("#issueTableTab").addClass("active");
+    });
+</script>
+
+<div class="well">
+    <h2><span class="label label-info">JIRA#@Model.Id.ToString("D4")</span></h2>
+    <h3>@Html.DisplayFor(model => model.Subject)</h3>
+    <button type="button" class="btn btn-default">편집</button>
+    <button type="button" class="btn btn-default">의견남기기</button>
+    <button type="button" class="btn btn-default">담당자변경</button>
+    <button type="button" class="btn btn-default">상태변경</button>
 </div>
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Subject)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Subject)
-        </dd>
+<hr />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
+<section class="mainSection">
+    <h4><span class="label label-primary">상세 내용</span></h4>
+    <table class="table table-striped">
+        <tr>
+            <td width="20%">상태</td>
+            <td width="60%">@Html.DisplayFor(model => model.Status)</td>
+        </tr>
+        <tr>
+            <td width="20%">우선순위</td>
+            <td width="60%">@Html.DisplayFor(model => model.Priority)</td>
+        </tr>
+        <tr>
+            <td width="20%">Fix Ver</td>
+            <td width="60%">@Html.DisplayFor(model => model.FixVersion)</td>
+        </tr>
+        <tr>
+            <td width="20%">설명</td>
+            <td width="60%">@Html.DisplayFor(model => model.Description)</td>
+        </tr>
+    </table>
+</section>
 
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
+<section class="subSection">
+    <h4><span class="label label-primary">사람들</span></h4>
+    <table class="table table-striped">
+        <tr>
+            <td>담당자</td>
+            <td>@Html.DisplayFor(model => model.Assignee)</td>
+        </tr>
+        <tr>
+            <td>보고자</td>
+            <td>@Html.DisplayFor(model => model.Repoter)</td>
+        </tr>
+    </table>
+</section>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Priority)
-        </dt>
+<section class="subSection">
+    <h4><span class="label label-primary">날짜</span></h4>
+    <table class="table table-striped">
+        <tr>
+            <td>생성 날짜</td>
+            <td>@Html.DisplayFor(model => model.CreatedTimeStamp)</td>
+        </tr>
+        <tr>
+            <td>완료 날짜</td>
+            <td>@Html.DisplayFor(model => model.CompletedTimeStamp)</td>
+        </tr>
+    </table>
+</section>
 
-        <dd>
-            @Html.DisplayFor(model => model.Priority)
-        </dd>
+<section class="subSection">
+    <h4><span class="label label-primary">일정관리</span></h4>
+    <table class="table table-striped">
+        <tr>
+            <td>예상 완료 기간</td>
+            <td>@Html.DisplayFor(model => model.Estimate)</td>
+        </tr>
+    </table>
+</section>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.FixVersion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FixVersion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Assignee)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Assignee)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Estimate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Estimate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CompletedTimeStamp)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CompletedTimeStamp)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Repoter)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Repoter)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.CreatedTimeStamp)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.CreatedTimeStamp)
-        </dd>
-    </dl>
-</div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
