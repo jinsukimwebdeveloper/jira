@@ -4,100 +4,146 @@
     ViewBag.Title = "이슈 상세 내용";
 }
 
-<style>
-    .mainSection {
-        float: left;
-        width: 600px;
-        height: 600px;
-        padding: 10px;
-        border: 1px dashed 
-    }
-
-    .subSection {
-        margin-left: 600px;
-        width: 300px;
-        height: 200px;
-        padding: 10px;
-    }
-</style>
-
 <script>
     $(document).ready(function () {
         // Active 운영이슈 Tab
         $("#issueTableTab").addClass("active");
+        // pull down components for alignment
+        $('.pull-down').each(function () {
+            $(this).css('margin-top', $(this).parent().height() - $(this).height())
+        });
     });
 </script>
 
+<style>
+    .well {
+        padding-top: 0;
+    }
+    hr {
+        margin-top: 0;
+    }
+</style>
+
 <div class="well">
-    <h2><span class="label label-info">JIRA#@Model.Id.ToString("D4")</span></h2>
-    <h3>@Html.DisplayFor(model => model.Subject)</h3>
-    <button type="button" class="btn btn-default">편집</button>
-    <button type="button" class="btn btn-default">의견남기기</button>
-    <button type="button" class="btn btn-default">담당자변경</button>
-    <button type="button" class="btn btn-default">상태변경</button>
+    <div class="row">
+        <div class="col-sm-2 pull-down">
+            <h2><span class="label label-info">JIRA#@Model.Id.ToString("D4")</span></h2>
+        </div>
+        <div class="col-sm-9 pull-down">
+            <h3>@Html.DisplayFor(model => model.Subject)</h3>
+        </div>
+    </div>
+    <hr/>
+    <div id="split-button-dropdown">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">편집</button>
+        </div><!-- /btn-group -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">의견남기기</button>
+        </div><!-- /btn-group -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">담당자 변경</button>
+        </div><!-- /btn-group -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">상태 변경</button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Open</a></li>
+                <li><a href="#">Resolved</a></li>
+                <li><a href="#">Fixed</a></li>
+                <li><a href="#">Closed</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Won't fix</a></li>
+            </ul>
+        </div><!-- /btn-group -->
+    </div>
 </div>
 
 <hr />
 
-<section class="mainSection">
-    <h4><span class="label label-primary">상세 내용</span></h4>
-    <table class="table table-striped">
-        <tr>
-            <td width="20%">상태</td>
-            <td width="60%">@Html.DisplayFor(model => model.Status)</td>
-        </tr>
-        <tr>
-            <td width="20%">우선순위</td>
-            <td width="60%">@Html.DisplayFor(model => model.Priority)</td>
-        </tr>
-        <tr>
-            <td width="20%">Fix Ver</td>
-            <td width="60%">@Html.DisplayFor(model => model.FixVersion)</td>
-        </tr>
-        <tr>
-            <td width="20%">설명</td>
-            <td width="60%">@Html.DisplayFor(model => model.Description)</td>
-        </tr>
-    </table>
-</section>
+<div class="container-fluid">
+    <section id="mainSection" class="col-sm-7">
+        <h4>
+            <span class="label label-default">상세 내용</span>&nbsp;
+            <i class="fa fa-eye fa-lg"></i>
+        </h4>
+        <table class="table table-striped">
+            <tr>
+                <td width="30%">상태</td>
+                <td width="70%">
+                    @if (Model.Status == "Open")
+                    {
+                        <h4><span class="label label-default">Open</span></h4>
+                    }
+                </td>
 
-<section class="subSection">
-    <h4><span class="label label-primary">사람들</span></h4>
-    <table class="table table-striped">
-        <tr>
-            <td>담당자</td>
-            <td>@Html.DisplayFor(model => model.Assignee)</td>
-        </tr>
-        <tr>
-            <td>보고자</td>
-            <td>@Html.DisplayFor(model => model.Repoter)</td>
-        </tr>
-    </table>
-</section>
+            </tr>
+            <tr>
+                <td width="30%">우선순위</td>
+                <td width="70%">
+                    @Html.DisplayFor(model => model.Priority)&nbsp;
+                    @if (Model.Priority == "Major")
+                    {
+                        <i class="fa fa-arrow-up fa-lg"></i>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td width="30%">Fix Ver</td>
+                <td width="70%">@Html.DisplayFor(model => model.FixVersion)</td>
+            </tr>
+            <tr>
+                <td width="30%">설명</td>
+                <td width="70%">@Html.DisplayFor(model => model.Description)</td>
+            </tr>
+        </table>
+    </section>
 
-<section class="subSection">
-    <h4><span class="label label-primary">날짜</span></h4>
-    <table class="table table-striped">
-        <tr>
-            <td>생성 날짜</td>
-            <td>@Html.DisplayFor(model => model.CreatedTimeStamp)</td>
-        </tr>
-        <tr>
-            <td>완료 날짜</td>
-            <td>@Html.DisplayFor(model => model.CompletedTimeStamp)</td>
-        </tr>
-    </table>
-</section>
-
-<section class="subSection">
-    <h4><span class="label label-primary">일정관리</span></h4>
-    <table class="table table-striped">
-        <tr>
-            <td>예상 완료 기간</td>
-            <td>@Html.DisplayFor(model => model.Estimate)</td>
-        </tr>
-    </table>
-</section>
+    <section class="col-sm-5">
+        <h4>
+            <span class="label label-default">사람들</span>&nbsp;
+            <i class="fa fa-male fa-lg"></i>
+            <i class="fa fa-female fa-lg"></i>
+        </h4>
+        <table class="table table-striped">
+            <tr>
+                <td width="40%">담당자</td>
+                <td width="60%">@Html.DisplayFor(model => model.Assignee)</td>
+            </tr>
+            <tr>
+                <td>보고자</td>
+                <td>@Html.DisplayFor(model => model.Repoter)</td>
+            </tr>
+        </table>
+        <h4>
+            <span class="label label-default">날짜</span>&nbsp;
+            <i class="fa fa-calendar fa-lg"></i>
+        </h4>
+        <table class="table table-striped">
+            <tr>
+                <td width="40%">생성 날짜</td>
+                <td width="60%">@Html.DisplayFor(model => model.CreatedTimeStamp)</td>
+            </tr>
+            <tr>
+                <td width="40%">완료 날짜</td>
+                <td width="60%">@Html.DisplayFor(model => model.CompletedTimeStamp)</td>
+            </tr>
+        </table>
+        <h4>
+            <span class="label label-default">일정관리</span>
+            <i class="fa fa-clock-o fa-lg"></i>
+        </h4>
+        <table class="table table-striped">
+            <tr>
+                <td width="40%">예상 완료 기간</td>
+                <td width="60%">@Html.DisplayFor(model => model.Estimate)</td>
+            </tr>
+        </table>
+    </section>
+</div>
 
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
