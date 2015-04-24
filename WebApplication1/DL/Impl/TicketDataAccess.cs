@@ -10,14 +10,14 @@ using System.Web;
 
 namespace Jira.DL.Impl
 {
-    public class IssueDataAccess : IissueDataAccess
+    public class TicketDataAccess : ITicketDataAccess
     {
         private const int dbTimeout = 600;
 
-        public IEnumerable<IssueListResult> GetIssueList(DateTime startTime, DateTime endTime, int pageNumber, int pageRows)
+        public IEnumerable<TicketResult> GetTicketList(DateTime startTime, DateTime endTime, int pageNumber, int pageRows)
         {
             Database db = new DatabaseProviderFactory().Create("JIRA");
-            List<IssueListResult> result = new List<IssueListResult>();
+            List<TicketResult> result = new List<TicketResult>();
             using (DbCommand cmd = db.GetStoredProcCommand("[dbo].[GetIssueList]"))
             {
                 cmd.CommandTimeout = dbTimeout;
@@ -28,7 +28,7 @@ namespace Jira.DL.Impl
                 DataSet ds = db.ExecuteDataSet(cmd);
                 for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                 {
-                    IssueListResult item = new IssueListResult();
+                    TicketResult item = new TicketResult();
                     item.Id = (int)ds.Tables[0].Rows[i]["Id"];
                     item.Subject = DBNull.Value.Equals(ds.Tables[0].Rows[i]["Subject"]) ? "" : (string)ds.Tables[0].Rows[i]["Subject"];
                     item.Status = DBNull.Value.Equals(ds.Tables[0].Rows[i]["Status"]) ? "" : (string)ds.Tables[0].Rows[i]["Status"];
@@ -41,7 +41,7 @@ namespace Jira.DL.Impl
                     item.CreatedTimeStamp = (DateTime)ds.Tables[0].Rows[i]["CreatedTimeStamp"];
                     result.Add(item);
                 }
-                IssueListResult.TotalCount = (int)ds.Tables[1].Rows[0]["TotalCount"];
+                TicketResult.TotalCount = (int)ds.Tables[1].Rows[0]["TotalCount"];
             }
 
             return result;
@@ -125,10 +125,10 @@ namespace Jira.DL.Impl
             }
         }
 
-        public IssueListResult FindIssue(int id)
+        public TicketResult FindIssue(int id)
         {
             Database db = new DatabaseProviderFactory().Create("JIRA");
-            IssueListResult result = new IssueListResult();
+            TicketResult result = new TicketResult();
             using (DbCommand cmd = db.GetStoredProcCommand("[dbo].[FindIssue]"))
             {
                 cmd.CommandTimeout = dbTimeout;

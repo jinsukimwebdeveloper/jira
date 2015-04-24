@@ -1,9 +1,9 @@
-﻿@model IEnumerable<Jira.Views.Dto.IssueListTableModel>
+﻿@model IEnumerable<Jira.Views.Dto.SprintTableModel>
 @{
-    ViewBag.Title = "운영이슈";
+    ViewBag.Title = "프로젝트";
 }
 @{
-    var TotalRows = Jira.Views.Dto.IssueListTableModel.TotalRows;
+    var TotalRows = Jira.Views.Dto.SprintTableModel.TotalRows;
     var TotalPage = 0;
 }
 @if ((TotalRows % 10) != 0)
@@ -48,13 +48,18 @@ else
         $("#InputFrom").val(from);
         $("#InputTo").val(to);
 
-        // Active 운영이슈 Tab
-        $("#issueTableTab").addClass("active");
+        // Active 개발티켓 Tab
+        $("#sprintTab").addClass("active");
 
         // 이슈 등록 팝업을 열때 모든 필드를 초기화.
         $("#showModalBtn").click(function () {
             $("#createIssueForm").find('input:text, input:password, input:file, select, textarea').val('');
             $("#createIssueForm").find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+        });
+
+        // pull down components for alignment
+        $('.pull-down').each(function () {
+            $(this).css('margin-top', $(this).parent().height() - $(this).height())
         });
     });
 
@@ -112,11 +117,11 @@ else
         }
 
         $.ajax({
-            url: '@Url.Action("GetIssueList", "Home")',
+            url: '@Url.Action("GetTicketList", "Home")',
             data: { pageNumber: pageNumber, pageRows: '10' },
             type: 'GET',
             success: function (data) {
-                $('#issueListTable').empty().append(data).clone();
+                $('#TableList').empty().append(data).clone();
                 $('#p_' + pageNumber).addClass("active");
                 currentPageNumber = pageNumber;
             },
@@ -132,7 +137,7 @@ else
             data: { pageNumber: currentPageNumber, pageRows: '10' },
             type: 'GET',
             success: function (data) {
-                $('#issueListTable').empty().append(data).clone();
+                $('#TableList').empty().append(data).clone();
             },
             error: function () {
                 alert("Internal Error");
@@ -141,19 +146,24 @@ else
     }
 </script>
 
-<h2>운영이슈</h2>
-
-<hr />
 
 <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-12 pull-down">
+        <h2>스프린트</h2>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-12">
         <form class="form-inline">
             <div class="form-group">
                 <input class="form-control" id="InputFrom" placeholder="From">
             </div>
+            <i id="toCalendar" class="fa fa-calendar fa-lg"></i>
             <div class="form-group">
                 <input class="form-control" id="InputTo" placeholder="To">
             </div>
+            <i id="fromCalendar" class="fa fa-calendar fa-lg"></i>&nbsp;&nbsp;&nbsp;
             <button id="searchTableBtn" type="button" class="btn btn-default">검색</button>
             <!-- Button trigger modal -->
             <button id="showModalBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#register">
@@ -164,12 +174,11 @@ else
 </div>
 <br />
 
-<div id="issueListTable">
-    @Html.Partial("_IssueListTable", Model)
+<div id="TableList">
+    @Html.Partial("_TableList", Model)
 </div>
 <ul class="pagination"></ul>
 
-<div id="createIssueModal">
-    @Html.Partial("_CreateIssueModal", ViewData["CreateIssueModel"])
-</div>
-
+@*<div id="ModalPopup">
+        @Html.Partial("_ModalPopup", ViewData["CreateTicketModel"])
+    </div>*@

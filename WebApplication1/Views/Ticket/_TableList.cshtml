@@ -1,9 +1,9 @@
-﻿@model IEnumerable<Jira.Views.Dto.IssueListTableModel>
+﻿@model IEnumerable<Jira.Views.Dto.TicketTableModel>
 <table class="table table-hover">
     <thead>
         <tr>
             <th>ID</th>
-            <th>이슈</th>
+            <th>티켓이름</th>
             <th>상태값</th>
             <th>중요도</th>
             <th>Fix Version</th>
@@ -18,7 +18,7 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td><p>@Html.ActionLink("JIRA#" + @item.Id.ToString("D4"), "Detail/" + @item.Id)</p>
+                <td><p>@Html.ActionLink("WEB#" + @item.Id.ToString("D4"), "Detail/" + @item.Id)</p>
                 </td>
                 <td><p>@item.Subject</p></td>
                 <td><p>@item.Status</p></td>
@@ -27,7 +27,7 @@
                 <td><p>@item.Assignee</p></td>
                 <td><p>@item.Estimate</p></td>
                 <td><p>@item.CompletedTimeStamp</p></td>
-                <td><p>@item.Repoter</p></td>
+                <td><p>@item.Reporter</p></td>
                 <td><p>@item.CreatedTimeStamp</p></td>
             </tr>
         }

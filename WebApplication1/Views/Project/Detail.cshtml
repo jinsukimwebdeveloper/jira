@@ -1,0 +1,115 @@
+﻿@model IEnumerable<Jira.Views.Dto.TicketTableModel>
+@{
+    ViewBag.Title = "프로젝트";
+}
+@{
+    var TotalRows = Jira.Views.Dto.TicketTableModel.TotalRows;
+    var TotalPage = 0;
+}
+@if ((TotalRows % 10) != 0)
+{
+    TotalPage = TotalRows / 10 + 1;
+}
+else
+{
+    TotalPage = TotalRows / 10;
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script>
+
+</script>
+
+<h2>프로젝트</h2>
+
+<hr />
+
+<table class="table table-striped" style="width:80%">
+    <tr>
+        <td style="width:20%">이름</td>
+        <td>JIRA</td>
+    </tr>
+    <tr>
+        <td>목적</td>
+        <td>
+            JIRA를 통해서 모든 프로젝트의 개발 및 유지보수를 진행한다.
+        </td>
+    </tr>
+    <tr>
+        <td>상태</td>
+        <td>개발 중</td>
+    </tr>
+    <tr>
+        <td>배포 Version</td>
+        <td>Ver1.00</td>
+    </tr>
+    <tr>
+        <td>잔행중인 스프린트</td>
+        <td>Jira#0001</td>
+    </tr>
+    <tr>
+        <td>담당자</td>
+        <td>
+            <table class="table table-condensed">
+                <tr>
+                    <td style="width:20%">PM</td>
+                    <td>김진수</td>
+                    <td>jinsukim@gmail.com</td>
+                    <td>010-4565-1139</td>
+                </tr>
+                <tr>
+                    <td>Lead Developer</td>
+                    <td>이태헌</td>
+                    <td>jinsukim@gmail.com</td>
+                    <td>010-4565-1139</td>
+                </tr>
+                <tr>
+                    <td>BA</td>
+                    <td>김진수</td>
+                    <td>jinsukim@gmail.com</td>
+                    <td>010-4565-1139</td>
+                </tr>
+                <tr>
+                    <td>QA</td>
+                    <td>이태헌</td>
+                    <td>jinsukim@gmail.com</td>
+                    <td>010-4565-1139</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>요구사항 리스트</td>
+        <td>
+            <table class="table table-condensed">
+                <tr>
+                    <td style="width:20%">Req#001</td>
+                    <td>어쩌구 저쩌구...</td>
+                </tr>
+                <tr>
+                    <td style="width:20%">Req#002</td>
+                    <td>어쩌구 저쩌구...</td>
+                </tr>
+                <tr>
+                    <td style="width:20%">Req#003</td>
+                    <td>어쩌구 저쩌구...</td>
+                </tr>
+                <tr>
+                    <td style="width:20%">Req#004</td>
+                    <td>어쩌구 저쩌구...</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+
+<div id="ListTable">
+    @*@Html.Partial("_TableList", Model)*@
+</div>
+<ul class="pagination"></ul>
+
+<div id="ModalPopup">
+    @*@Html.Partial("_ModalPopup", ViewData["CreateTicketModel"])*@
+</div>
+

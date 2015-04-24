@@ -13,30 +13,18 @@ using System.Web.Mvc;
 
 namespace Jira.Controllers
 {
-    public class HomeController : Controller
+    public class TicketController : Controller
     {
+
         public ActionResult Index()
         {
-            return View();
-        }
+            TicketHandler handler = new TicketHandler(new TicketDataAccess());
 
-        [HttpPost]
-        public ActionResult RequestLogin(LoginModel login)
-        {
-            LoginHandler loginHandler = new LoginHandler(new LoginDataAccess());
-            LoginResult result = loginHandler.RequestLogin(login);
-            return Json(result);
-        }
-
-        public ActionResult IssuesList()
-        {
-            IissueHandler handler = new IssueHandler(new IssueDataAccess());
-
-            // Retrieve the issue list for the past 6 months only
+            // Retrieve the tickets list for the past 6 months only
             DateTime to = DateTime.Now.AddDays(1);
             DateTime from = DateTime.Now.AddMonths(-6);
-            IEnumerable<IssueListTableModel> model = handler.GetIssueListMoel(from, to, 1, 10);
-            CreateIssueModel createIssueModel = new CreateIssueModel();
+            IEnumerable<TicketTableModel> model = handler.GetTicketTableModel(from, to, 1, 10);
+            CreateTicketModel createTicketModel = new CreateTicketModel();
 
             // Priority dropdown list
             List<SelectListItem> priorityList = new List<SelectListItem>();
@@ -45,7 +33,7 @@ namespace Jira.Controllers
             {
                 priorityList.Add(new SelectListItem { Text = priority.Name, Value = priority.Id.ToString() });
             }
-            createIssueModel.PriorityList = priorityList;
+            createTicketModel.PriorityList = priorityList;
 
             // Owner dropdown list
             List<SelectListItem> ownerList = new List<SelectListItem>();
@@ -54,7 +42,7 @@ namespace Jira.Controllers
             {
                 ownerList.Add(new SelectListItem { Text = user.Name, Value = user.Id.ToString() });
             }
-            createIssueModel.OwnerList = ownerList;
+            createTicketModel.OwnerList = ownerList;
 
             // Component list
             List<SelectListItem> componentList = new List<SelectListItem>();
@@ -63,7 +51,7 @@ namespace Jira.Controllers
             {
                 componentList.Add(new SelectListItem { Text = component.Name, Value = component.Id.ToString() });
             }
-            createIssueModel.ComponentList = componentList;
+            createTicketModel.ComponentList = componentList;
 
             // Estimate list
             List<SelectListItem> estimateList = new List<SelectListItem>();
@@ -71,32 +59,32 @@ namespace Jira.Controllers
             {
                 estimateList.Add(new SelectListItem { Text = i + "MD", Value = i.ToString() });
             }
-            createIssueModel.EstimateList = estimateList;
+            createTicketModel.EstimateList = estimateList;
 
-            ViewData["CreateIssueModel"] = createIssueModel;
+            ViewData["CreateTicketModel"] = createTicketModel;
             return View(model);
         }
 
         [HttpGet]
-        public ActionResult GetIssueList(int pageNumber, int pageRows)
+        public ActionResult GetTicketList(int pageNumber, int pageRows)
         {
-            IissueHandler handler = new IssueHandler(new IssueDataAccess());
-            IEnumerable<IssueListTableModel> model = handler.GetIssueListMoel(DateTime.Parse("2015-01-01"), DateTime.Parse("2015-12-31"), pageNumber, pageRows);
+            TicketHandler handler = new TicketHandler(new TicketDataAccess());
+            IEnumerable<TicketTableModel> model = handler.GetTicketTableModel(DateTime.Parse("2015-01-01"), DateTime.Parse("2015-12-31"), pageNumber, pageRows);
             return PartialView("_IssueListTable", model);
         }
 
         [HttpPost]
-        public int CreateIssue(CreateIssueModel model)
+        public int CreateIssue(CreateTicketModel model)
         {
-            IissueHandler handler = new IssueHandler(new IssueDataAccess());
+            TicketHandler handler = new TicketHandler(new TicketDataAccess());
             return handler.CreateIssue(model);
         }
 
         public ActionResult Detail(int id)
         {
             // Find the issue detail
-            IissueHandler handler = new IssueHandler(new IssueDataAccess());
-            IssueListTableModel model = handler.FindIssues(id);
+            TicketHandler handler = new TicketHandler(new TicketDataAccess());
+            TicketTableModel model = handler.FindIssues(id);
 
             return View(model);
         }

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Jira.Views.Dto.SprintTableModel>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>프로젝트</th>
+            <th>제목</th>
+            <th>상태</th>
+            <th>시작</th>
+            <th>완료</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <p>@Html.ActionLink(@item.Project + "#" + @item.Id.ToString("D4"), "Detail/" + @item.Id)</p>
+                </td>
+                <td><p>@item.Project</p></td>
+                <td><p>@item.Subject</p></td>
+                <td><p>@item.Status</p></td>
+                <td><p>@item.StartTime</p></td>
+                <td><p>@item.EndTime</p></td>
+            </tr>
+        }
+    </tbody>
+</table>

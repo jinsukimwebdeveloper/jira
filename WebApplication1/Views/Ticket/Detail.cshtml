@@ -1,4 +1,4 @@
-﻿@model Jira.Views.Dto.IssueListTableModel
+﻿@model Jira.Views.Dto.TicketTableModel
 
 @{
     ViewBag.Title = "이슈 상세 내용";
@@ -6,7 +6,7 @@
 
 <script>
     $(document).ready(function () {
-        // Active 운영이슈 Tab
+        // Active 개발티켓 Tab
         $("#issueTableTab").addClass("active");
         // pull down components for alignment
         $('.pull-down').each(function () {
@@ -58,6 +58,9 @@
                 <li class="divider"></li>
                 <li><a href="#">Won't fix</a></li>
             </ul>
+        </div><!-- /btn-group -->
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">삭제</button>
         </div><!-- /btn-group -->
     </div>
 </div>
@@ -115,7 +118,7 @@
             </tr>
             <tr>
                 <td>보고자</td>
-                <td>@Html.DisplayFor(model => model.Repoter)</td>
+                <td>@Html.DisplayFor(model => model.Reporter)</td>
             </tr>
         </table>
         <h4>
@@ -145,8 +148,7 @@
     </section>
 </div>
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<div class="row">
+
+</div>
 

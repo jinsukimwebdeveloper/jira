@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Jira.DL.Interfaces.Dto
 {
-    public class IssueListResult
+    public class TicketResult
     {
         public int Id { get; set; }
         public string Subject { get; set; }

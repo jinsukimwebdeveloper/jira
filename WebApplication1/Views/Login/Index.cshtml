@@ -63,7 +63,7 @@
                     $('#inputPassword').val('');
             } else {
                 // redirect to issue page
-                window.location.href = "@Url.Action("IssuesList", "Home")";
+                window.location.href = "@Url.Action("Index", "Ticket")";
             }
         }
 
@@ -77,7 +77,7 @@
     </script>
     <div class="container">
         <br />
-        @using (Ajax.BeginForm("RequestLogin", "Home", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
+        @using (Ajax.BeginForm("RequestLogin", "Login", new AjaxOptions { OnSuccess = "OnSuccess", OnFailure = "OnFailure" }))
         {
             <div class="form-signin">
                 <h2>로그인 해 주세요.</h2>

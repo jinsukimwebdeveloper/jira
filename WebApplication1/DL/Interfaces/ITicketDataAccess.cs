@@ -6,9 +6,9 @@ using System.Web;
 
 namespace Jira.DL.Interfaces
 {
-    public interface IissueDataAccess
+    public interface ITicketDataAccess
     {
-        IEnumerable<IssueListResult> GetIssueList(DateTime startTime, DateTime endTime, int pageNumber, int pageRows);
+        IEnumerable<TicketResult> GetTicketList(DateTime startTime, DateTime endTime, int pageNumber, int pageRows);
 
         IEnumerable<UserResult> GetUsers();
 
@@ -18,6 +18,6 @@ namespace Jira.DL.Interfaces
 
         int CreateIssue(CreateIssueResult createIssueResult);
 
-        IssueListResult FindIssue(int id);
+        TicketResult FindIssue(int id);
     }
 }

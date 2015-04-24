@@ -48,4 +48,15 @@ BEGIN
   WHERE dbo.Issues.Id = i.Id AND dbo.Issues.Id = i.Id
 END
 
+CREATE TRIGGER dbo.AfterUpdateProject ON Jira.dbo.Project
+AFTER INSERT, UPDATE 
+AS
+BEGIN
+  UPDATE dbo.Project
+  SET UpdatedTimeStamp = GETDATE()
+  FROM Inserted i
+  WHERE dbo.Project.Id = i.Id AND dbo.Project.Id = i.Id
+END
+
+
 select * from sys.triggers

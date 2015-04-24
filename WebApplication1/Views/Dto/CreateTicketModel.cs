@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Jira.Views.Dto
 {
-    public class CreateIssueModel
+    public class CreateTicketModel
     {
         public string Subject { get; set; }
         public string FixVersion { get; set; }

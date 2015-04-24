@@ -37,5 +37,26 @@ INSERT INTO Priority(Name) Values('Trivial')
 INSERT INTO Priority(Name) Values('Minor')
 SELECT * FROM Priority
 
+CREATE TABLE ProjectMembers
+(
+Id int IDENTITY(1,1) PRIMARY KEY,
+Member int,
+Role int,
+CreatedTimeStamp datetime2 NOT NULL CONSTRAINT DF_Project_CreateDate_GETDATE DEFAULT GETDATE(),
+UpdatedTimeStamp datetime2,
+)
+
+CREATE TABLE Role
+(
+Id int IDENTITY(1,1) PRIMARY KEY,
+Name nvarchar(255),
+CreatedTimeStamp datetime2 NOT NULL CONSTRAINT DF_Role_CreateDate_GETDATE DEFAULT GETDATE(),
+UpdatedTimeStamp datetime2
+)
+
+INSERT INTO Priority(Name) Values('Developer')
+INSERT INTO Priority(Name) Values('DBA')
+INSERT INTO Priority(Name) Values('BA')
+INSERT INTO Priority(Name) Values('PM')
 
 
