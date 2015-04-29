@@ -1,12 +1,12 @@
-﻿@model Jira.Views.Dto.CreateTicketModel
+﻿@model Jira.Views.Dto.CreateProjectModel
 
-<!-- 이슈 등록 Modal -->
+<!-- 프로젝트 등록 Modal -->
 <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">신규 이슈 등록</h4>
+                <h4 class="modal-title" id="myModalLabel"> <i class="fa fa-plus fa-lg"></i>&nbsp;&nbsp;신규 프로젝트 등록</h4>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -20,54 +20,30 @@
                             이슈 등록을 실패 하였습니다.
                         </div>
                     </div>
-                    <fieldset id="createIssueForm">
+                    <fieldset id="createForm">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label class="control-label col-md-2">제목</label>
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+                                <label class="control-label col-sm-3" for="email">이름:</label>
+                                <div class="col-sm-9">
+                                    @Html.TextBoxFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
                                 </div>
                             </div>
-                        </form>
-                        <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label class="control-label col-md-2">중요도</label>
-                                <div class="col-md-4">
-                                    @Html.DropDownListFor(model => model.Priority, (IEnumerable<SelectListItem>)Model.PriorityList, "선택하세요", new { @class = "form-control" })
-                                </div>
-                                <div class="form-group">
-                                    <label class="control-label col-md-2">Sprint</label>
-                                    <div class="col-md-3">
-                                        @Html.EditorFor(model => model.FixVersion, new { htmlAttributes = new { @class = "form-control" } })
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="control-label col-md-2">담당자</label>
-                                <div class="col-md-4">
-                                    @Html.DropDownListFor(model => model.Owner, (IEnumerable<SelectListItem>)Model.OwnerList, "선택하세요", new { @class = "form-control" })
-                                </div>
-                                <label class="control-label col-md-2">예상기간</label>
-                                <div class="col-md-4">
-                                    @Html.DropDownListFor(model => model.Estimate, (IEnumerable<SelectListItem>)Model.EstimateList, "선택하세요", new { @class = "form-control" })
-                                </div>
-                            </div>
-                        </form>
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="control-label col-md-2">Component</label>
-                                <div class="col-md-4">
-                                    @Html.DropDownListFor(model => model.Component, (IEnumerable<SelectListItem>)Model.ComponentList, "선택하세요", new { @class = "form-control" })
-                                </div>
-                            </div>
-                        </form>
-                        <form class="form-horizontal" role="form">
-                            <div class="form-group">
-                                <label class="control-label col-md-2">내용</label>
-                                <div class="col-md-10">
+                                <label class="control-label col-sm-3" for="email">설명:</label>
+                                <div class="col-sm-9">
                                     @Html.TextArea("Description", Model.Description, new { @class = "form-control", rows = 10 })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="email">시작날짜:</label>
+                                <div class="col-sm-5">
+                                    @Html.TextBoxFor(model => model.StartTime, new { id = "ModalInputFrom", placeholder = "From", htmlAttributes = new { @class = "form-control" } })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-3" for="email">예상완료날짜:</label>
+                                <div class="col-sm-5">
+                                    @Html.TextBoxFor(model => model.EndTime, new { id = "ModalInputTo", placeholder = "To", htmlAttributes = new { @class = "form-control" } })
                                 </div>
                             </div>
                         </form>
@@ -76,50 +52,59 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary" id="registerIssueBtn"><i id="registerLoadingIcon" class="fa fa-spinner fa-pulse"></i>&nbsp;등록</button>
+                <button type="button" class="btn btn-primary" id="registerBtn"><i id="registerLoadingIcon" class="fa fa-spinner fa-pulse"></i>&nbsp;등록</button>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    $("#registerIssueBtn").click(function () {
-        var createIssueForm = $("#createIssueForm");
+    $(document).ready(function () {
+        // DatePicker
+        $("#ModalInputFrom").datepicker();
+        $("#ModalInputTo").datepicker();
+
+        // Ajax loading icon
+        $(document).ajaxStart(function () {
+            $("#registerLoadingIcon").show();
+            $("#registerBtn").attr("disabled", true);
+        }).ajaxStop(function () {
+            // do nothing.
+        });
+
+        $("#successMsgBlock").hide();
+        $("#errorMsgBlock").hide();
+        $("#registerLoadingIcon").hide();
+    });
+
+    $("#registerBtn").click(function () {
+        var createIssueForm = $("#createForm");
         //ajax call
         $.ajax({
-            url: '@Url.Action("CreateIssue", "Home")',
+            url: '@Url.Action("CreateProject", "Project")',
             data: createIssueForm.serialize(),
             type: 'POST',
             success: function (data) {
                 if (data == 1) {
                     // Show success message
                     $("#successMsgBlock").show();
-                    reloadIssueTable();
+                    hideMessageBoxAfterSecond(2000);
                 }
                 else {
                     // Show error message DB Error
                     $("#errorMsgBlock").show();
                 }
-                hideMessageBoxAfterSecond(1500);
             },
             error: function () {
                 // Show error message
                 $("#errorMsgBlock").show();
-                hideMessageBoxAfterSecond(1500);
             }
         });
     });
 
     function hideMessageBoxAfterSecond(second) {
         window.setTimeout(function () {
-            $("#successMsgBlock").fadeOut();
-            $("#errorMsgBlock").fadeOut();
-            $("#createIssueForm").find('input:text, input:password, input:file, select, textarea').val('');
-            $("#createIssueForm").find('input:radio, input:checkbox').removeAttr('checked').removeAttr('selected');
+            location.reload();
         }, second);
     }
-
-    $("#successMsgBlock").hide();
-    $("#errorMsgBlock").hide();
-    $("#registerLoadingIcon").hide();
 </script>

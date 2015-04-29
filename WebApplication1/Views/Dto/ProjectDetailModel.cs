@@ -14,5 +14,7 @@ namespace Jira.Views.Dto
         public string ReleasedVersion { get; set; }
         public string RecentSprint { get; set; }
         public string LastUpdatedBy { get; set; }
+        public IEnumerable<ProjectMembersModel> Members { get; set; }
+        public IEnumerable<TicketTableModel> Tickets { get; set; }
     }
 }

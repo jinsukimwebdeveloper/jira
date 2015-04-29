@@ -18,8 +18,10 @@ BEGIN
 	SET LOCK_TIMEOUT 20000;  
 
 	BEGIN TRY  
-		INSERT INTO dbo.Issues (Subject, Status, Components, Priority, FixVersion, Description, Assignee, Reporter, Estimate)
-		VALUES(@Subject, 1, @Component, @Priority, @FixVersion, @Description, @Owner, @Repoter, @Estimate)
+		BEGIN TRAN   
+			INSERT INTO dbo.Issues (Subject, Status, Components, Priority, FixVersion, Description, Assignee, Reporter, Estimate)
+			VALUES(@Subject, 1, @Component, @Priority, @FixVersion, @Description, @Owner, @Repoter, @Estimate)
+		COMMIT TRAN;     
 		SET @Result = 1
 	END TRY
 

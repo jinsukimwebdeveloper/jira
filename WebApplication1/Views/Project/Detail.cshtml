@@ -1,36 +1,26 @@
-﻿@model IEnumerable<Jira.Views.Dto.TicketTableModel>
+﻿@model IEnumerable<Jira.Views.Dto.ProjectDetailModel>
 @{
     ViewBag.Title = "프로젝트";
 }
-@{
-    var TotalRows = Jira.Views.Dto.TicketTableModel.TotalRows;
-    var TotalPage = 0;
-}
-@if ((TotalRows % 10) != 0)
-{
-    TotalPage = TotalRows / 10 + 1;
-}
-else
-{
-    TotalPage = TotalRows / 10;
-}
+
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script>
 
 </script>
 
-<h2>프로젝트</h2>
+<h2>프로젝트: JIRA</h2>
+
+<div class="container row">
+    <button class="btn btn-default">수정</button>
+    <button class="btn btn-default">삭제</button>
+</div>
 
 <hr />
 
 <table class="table table-striped" style="width:80%">
     <tr>
-        <td style="width:20%">이름</td>
-        <td>JIRA</td>
-    </tr>
-    <tr>
-        <td>목적</td>
+        <td style="width:20%">설명</td>
         <td>
             JIRA를 통해서 모든 프로젝트의 개발 및 유지보수를 진행한다.
         </td>
@@ -48,6 +38,10 @@ else
         <td>Jira#0001</td>
     </tr>
     <tr>
+        <td>Source Repository</td>
+        <td>@Html.ActionLink("http://www.github.com/jira", "http://www.github.com/jira")
+    </tr>
+    <tr>
         <td>담당자</td>
         <td>
             <table class="table table-condensed">
@@ -63,19 +57,8 @@ else
                     <td>jinsukim@gmail.com</td>
                     <td>010-4565-1139</td>
                 </tr>
-                <tr>
-                    <td>BA</td>
-                    <td>김진수</td>
-                    <td>jinsukim@gmail.com</td>
-                    <td>010-4565-1139</td>
-                </tr>
-                <tr>
-                    <td>QA</td>
-                    <td>이태헌</td>
-                    <td>jinsukim@gmail.com</td>
-                    <td>010-4565-1139</td>
-                </tr>
             </table>
+            <button class="btn btn-default">담당자 추가</button>
         </td>
     </tr>
     <tr>
@@ -99,6 +82,7 @@ else
                     <td>어쩌구 저쩌구...</td>
                 </tr>
             </table>
+            <button class="btn btn-default">요구사항 추가</button>
         </td>
     </tr>
 </table>

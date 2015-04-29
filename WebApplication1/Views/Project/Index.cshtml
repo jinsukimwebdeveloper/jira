@@ -1,9 +1,9 @@
-﻿@model IEnumerable<Jira.Views.Dto.SprintTableModel>
+﻿@model IEnumerable<Jira.Views.Dto.ProjectTableModel>
 @{
     ViewBag.Title = "프로젝트";
 }
 @{
-    var TotalRows = Jira.Views.Dto.SprintTableModel.TotalRows;
+    var TotalRows = Jira.Views.Dto.ProjectTableModel.TotalRows;
     var TotalPage = 0;
 }
 @if ((TotalRows % 10) != 0)
@@ -28,15 +28,6 @@ else
         // Register click event handler
         $(".pagination").on("click", "li", pageNumberClickHandler);
 
-        // Ajax loading icon
-        $(document).ajaxStart(function () {
-            $("#registerLoadingIcon").show();
-            $("#registerIssueBtn").attr("disabled", true);
-        }).ajaxStop(function () {
-            $("#registerLoadingIcon").hide();
-            $("#registerIssueBtn").attr("disabled", false);
-        });
-
         // DatePicker
         $("#InputFrom").datepicker();
         $("#InputTo").datepicker();
@@ -49,7 +40,7 @@ else
         $("#InputTo").val(to);
 
         // Active 개발티켓 Tab
-        $("#sprintTab").addClass("active");
+        $("#projectTab").addClass("active");
 
         // 이슈 등록 팝업을 열때 모든 필드를 초기화.
         $("#showModalBtn").click(function () {
@@ -117,7 +108,7 @@ else
         }
 
         $.ajax({
-            url: '@Url.Action("GetTicketList", "Home")',
+            url: '@Url.Action("GetProjectList", "Project")',
             data: { pageNumber: pageNumber, pageRows: '10' },
             type: 'GET',
             success: function (data) {
@@ -130,26 +121,12 @@ else
             }
         });
     }
-
-    function reloadIssueTable() {
-        $.ajax({
-            url: '@Url.Action("GetIssueList", "Home")',
-            data: { pageNumber: currentPageNumber, pageRows: '10' },
-            type: 'GET',
-            success: function (data) {
-                $('#TableList').empty().append(data).clone();
-            },
-            error: function () {
-                alert("Internal Error");
-            }
-        });
-    }
 </script>
 
 
 <div class="row">
     <div class="col-md-12 pull-down">
-        <h2>스프린트</h2>
+        <h2><i class="fa fa-cubes fa-lg"></i>&nbsp;프로젝트</h2>
     </div>
 </div>
 <hr />
@@ -179,6 +156,6 @@ else
 </div>
 <ul class="pagination"></ul>
 
-@*<div id="ModalPopup">
-        @Html.Partial("_ModalPopup", ViewData["CreateTicketModel"])
-    </div>*@
+<div id="ModalPopup">
+    @Html.Partial("_ModalPopup", ViewData["CreateProjectModel"])
+</div>

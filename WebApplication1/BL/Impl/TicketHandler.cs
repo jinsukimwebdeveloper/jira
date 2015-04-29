@@ -52,7 +52,6 @@ namespace Jira.BL.Impl
             result.Owner = model.Owner;
             result.Repoter = GetLoginUser();
             result.Component = model.Component;
-            _issueDataAccess.CreateIssue(result);
             return _issueDataAccess.CreateIssue(result);
         }
 

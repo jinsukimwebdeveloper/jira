@@ -54,9 +54,23 @@ CreatedTimeStamp datetime2 NOT NULL CONSTRAINT DF_Role_CreateDate_GETDATE DEFAUL
 UpdatedTimeStamp datetime2
 )
 
-INSERT INTO Priority(Name) Values('Developer')
-INSERT INTO Priority(Name) Values('DBA')
-INSERT INTO Priority(Name) Values('BA')
-INSERT INTO Priority(Name) Values('PM')
+INSERT INTO Role(Name) Values('Developer')
+INSERT INTO Role(Name) Values('DBA')
+INSERT INTO Role(Name) Values('BA')
+INSERT INTO Role(Name) Values('PM')
 
+DROP TABLE PROJECT
 
+CREATE TABLE Member
+(
+Id int IDENTITY(1,1) PRIMARY KEY,
+ProjectMembers int,
+UsersNo int,
+Role int
+)
+
+select * from Member
+
+INSERT INTO Member (ProjectMembers, UsersNo, Role) Values(1,1,1)
+INSERT INTO Member (ProjectMembers, UsersNo, Role) Values(1,2,2)
+INSERT INTO Member (ProjectMembers, UsersNo, Role) Values(1,3,3)

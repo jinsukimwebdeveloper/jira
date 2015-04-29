@@ -117,18 +117,25 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="BL\Impl\ProjectHandler.cs" />
     <Compile Include="BL\Impl\SprintHandler.cs" />
+    <Compile Include="BL\Impl\UserHandler.cs" />
     <Compile Include="BL\Impl\TicketHandler.cs" />
     <Compile Include="BL\Impl\LoginHandler.cs" />
+    <Compile Include="BL\Interface\IUserHandler.cs" />
+    <Compile Include="BL\Interface\IProjectHandler.cs" />
     <Compile Include="BL\Interface\ISprintHandler.cs" />
     <Compile Include="BL\Interface\ITicketHandler.cs" />
     <Compile Include="BL\Interface\ILoginHandler.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\SprintController.cs" />
     <Compile Include="DL\Impl\CommonDataAccess.cs" />
     <Compile Include="DL\Impl\ProjectDataAccess.cs" />
+    <Compile Include="DL\Impl\UserDataAccrss.cs" />
+    <Compile Include="DL\Interfaces\Dto\CreateProjectResult.cs" />
     <Compile Include="DL\Interfaces\Dto\ProjectResult.cs" />
     <Compile Include="DL\Interfaces\ICommonDataAccess.cs" />
     <Compile Include="DL\Interfaces\IProjectDataAccess.cs" />
@@ -143,6 +150,7 @@
     <Compile Include="DL\Interfaces\Dto\UserResult.cs" />
     <Compile Include="DL\Interfaces\Dto\TicketResult.cs" />
     <Compile Include="DL\Interfaces\Dto\LoginResult.cs" />
+    <Compile Include="DL\Interfaces\IUserDataAccess.cs" />
     <Compile Include="DL\Interfaces\ITicketDataAccess.cs" />
     <Compile Include="DL\Interfaces\ILoginDataAccess.cs" />
     <Compile Include="Global.asax.cs">
@@ -152,22 +160,29 @@
     <Compile Include="Views\Dto\CreateSprintModel .cs" />
     <Compile Include="Views\Dto\CreateTicketModel.cs" />
     <Compile Include="Views\Dto\ProjectDetailModel.cs" />
+    <Compile Include="Views\Dto\ProjectMembersModel.cs" />
+    <Compile Include="Views\Dto\CreateProjectModel.cs" />
+    <Compile Include="Views\Dto\ProjectTableModel.cs" />
     <Compile Include="Views\Dto\TicketTableModel.cs" />
     <Compile Include="Views\Dto\LoginModel.cs" />
     <Compile Include="Views\Dto\SprintTableModel.cs" />
+    <Compile Include="Views\Dto\UserTableModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="DB\SP\FindIssue.txt" />
-    <Content Include="DB\SP\GetComponent.txt" />
-    <Content Include="DB\SP\GetProjectList.txt" />
-    <Content Include="DB\SP\GetSprintList.txt" />
-    <Content Include="DB\SP\GetUsers.txt" />
-    <Content Include="DB\SP\GetPriority.txt" />
-    <Content Include="DB\SP\CreateIssue.txt" />
-    <Content Include="DB\SP\GetIssueList.txt" />
-    <Content Include="DB\SP\RequestLogin.txt" />
+    <None Include="DB\SP\CreateProject.sp" />
+    <None Include="DB\SP\FindIssue.sp" />
+    <None Include="DB\SP\GetComponent.sp" />
+    <Content Include="DB\SP\GetUserList.sp" />
+    <None Include="DB\SP\GetProjectSelectList.sp" />
+    <None Include="DB\SP\GetProjectList.sp" />
+    <None Include="DB\SP\GetSprintList.sp" />
+    <None Include="DB\SP\GetUsers.sp" />
+    <None Include="DB\SP\GetPriority.sp" />
+    <None Include="DB\SP\CreateIssue.sp" />
+    <None Include="DB\SP\GetIssueList.sp" />
+    <None Include="DB\SP\RequestLogin.sp" />
     <Content Include="DB\Table\Sprint.txt" />
     <Content Include="DB\Table\Constant.txt" />
     <Content Include="DB\Table\Issues.txt" />
@@ -218,10 +233,12 @@
     <Content Include="Views\Project\_ModalPopup.cshtml" />
     <Content Include="Views\Project\_TableList.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\Table\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

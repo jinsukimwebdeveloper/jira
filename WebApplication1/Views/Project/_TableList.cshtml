@@ -1,10 +1,9 @@
-﻿@model IEnumerable<Jira.Views.Dto.SprintTableModel>
+﻿@model IEnumerable<Jira.Views.Dto.ProjectTableModel>
 <table class="table table-hover">
     <thead>
         <tr>
             <th>ID</th>
             <th>프로젝트</th>
-            <th>제목</th>
             <th>상태</th>
             <th>시작</th>
             <th>완료</th>
@@ -15,11 +14,21 @@
         {
             <tr>
                 <td>
-                    <p>@Html.ActionLink(@item.Project + "#" + @item.Id.ToString("D4"), "Detail/" + @item.Id)</p>
+                    <p>@Html.ActionLink("PRO#" + @item.Id.ToString("D4"), "Detail/" + @item.Id)</p>
                 </td>
-                <td><p>@item.Project</p></td>
                 <td><p>@item.Subject</p></td>
-                <td><p>@item.Status</p></td>
+                <td>
+                    <p>
+                        @if (item.Status == "Open")
+                        {
+                            <h4><span class="label label-info">@item.Status</span></h4>
+                        }
+                        else
+                        {
+                            <h4><span class="label label-info">@item.Status</span></h4>
+                        }
+                    </p>
+                </td>
                 <td><p>@item.StartTime</p></td>
                 <td><p>@item.EndTime</p></td>
             </tr>
